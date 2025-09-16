@@ -7,6 +7,9 @@ body {
   font-family: var(--font-karla);
 }
 
+@layer components {
+}
+
 @theme inline {
   --color-brand-primary: _;
   --color-brand-secondary: _;
