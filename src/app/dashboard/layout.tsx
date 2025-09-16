@@ -1,3 +1,4 @@
+import Footer from "@/components/dashboard/footer";
 import Nav from "@/components/dashboard/nav";
 
 export default function Layout({
@@ -6,9 +7,10 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
+    <main className="flex h-dvh flex-col">
       <Nav />
       {children}
+      <Footer />
     </main>
   );
 }
