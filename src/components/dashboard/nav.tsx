@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
+import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 
 export default function Nav() {
   return (
@@ -9,7 +9,7 @@ export default function Nav() {
       <Tabs defaultValue="account">
         <TabsList>
           <TabsTrigger value="account">
-            <Link href="/dashboard">Overview</Link>
+            <Link href="/dashboard">Habits</Link>
           </TabsTrigger>
           <TabsTrigger value="password">
             <Link href="/settings">Settings</Link>

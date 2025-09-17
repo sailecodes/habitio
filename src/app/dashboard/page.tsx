@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import Today from '@/components/dashboard/today';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 
 export default function Dashboard() {
   return (
@@ -25,16 +26,7 @@ export default function Dashboard() {
       <div className="flex gap-10">
         <div className="flex-1/3 space-y-10">
           {/* Today's Habit */}
-          <div className="space-y-5">
-            <header className="text-2xl -tracking-[2px]">
-              Today&apos;s Habit
-            </header>
-            <div className="space-x-2">
-              <Button className="hover:cursor-pointer">Skipping</Button>
-              <Button className="hover:cursor-pointer">In-progress</Button>
-              <Button className="hover:cursor-pointer">Completed</Button>
-            </div>
-          </div>
+          <Today />
 
           {/* Goals */}
           <div className="space-y-5">

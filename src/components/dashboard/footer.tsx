@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-10 p-10 text-sm">
         <div className="flex flex-col">
           <span className="text-4xl font-bold -tracking-[2px]">Habits</span>
-          <span>Where habits meet intelligence.</span>
+          <span>Where consistency meet intelligence.</span>
         </div>
         <div className="space-x-2">
           <Link href="/">Home</Link>
