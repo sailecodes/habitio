@@ -1,4 +1,5 @@
 import Goals from '@/components/dashboard/project/goals';
+import PCalendar from '@/components/dashboard/project/pcalendar';
 import Today from '@/components/dashboard/project/today';
 import { Separator } from '@/components/ui/separator';
 
@@ -14,21 +15,25 @@ export default function Project() {
         </span>
 
         {/* Streak */}
-        <span className="self-end text-3xl font-medium -tracking-[2px]">
-          <span>145</span> day streak
-        </span>
+        <div className="flex flex-col self-end text-right">
+          <span className="text-3xl font-medium -tracking-[2px]">
+            <span className="text-[38px]">145</span> day streak
+          </span>
+          <span className="text-sm">You've done this before, haven't you?</span>
+        </div>
       </header>
 
       <Separator className="my-10 border-2" />
 
-      <div className="flex gap-10">
+      <div className="flex gap-20">
         <div className="flex-1/3 space-y-10">
           <Today />
           <Goals />
         </div>
         <div className="flex-2/3">
           {/* Calendar */}
-          <div className="h-[550px] w-full rounded-md bg-gray-200" />
+          {/* <div className="h-[550px] w-full rounded-md bg-gray-200" /> */}
+          <PCalendar />
         </div>
       </div>
     </section>
