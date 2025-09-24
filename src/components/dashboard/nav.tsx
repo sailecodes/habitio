@@ -14,7 +14,7 @@ export default function Nav() {
             <Link href="/dashboard">Dashboard</Link>
           </TabsTrigger>
           <TabsTrigger value="password">
-            <Link href="/settings">Settings</Link>
+            <Link href="/dashboard/settings">Settings</Link>
           </TabsTrigger>
         </TabsList>
       </Tabs>
