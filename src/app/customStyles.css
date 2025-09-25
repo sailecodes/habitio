@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+body {
+  font-family: var(--font-karla);
+}
+
+@theme inline {
+  --color-brand-primary: _;
+  --color-brand-secondary: _;
+  --color-brand-accent: _;
+}
+
+@layer components {
+  .container-dm {
+    @apply mx-auto w-full max-w-7xl p-10;
+  }
+
+  .text-title {
+    @apply text-6xl font-medium -tracking-[3px];
+  }
+
+  .text-header {
+    @apply text-3xl font-medium -tracking-[2px];
+  }
+
+  .text-subheader {
+    @apply text-2xl font-normal -tracking-[2px];
+  }
+
+  .card {
+    @apply rounded-md border-1 p-5 shadow-md;
+  }
+
+  .hover-translate {
+    @apply transition-all hover:-translate-y-0.5;
+  }
+
+  .icon {
+    @apply size-5 hover:cursor-pointer;
+  }
+}

@@ -1,8 +1,8 @@
 "use client";
 
-import { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { createNewProject } from "@/actions/newProject.action";
 import {
   Form,
   FormControl,
@@ -13,29 +13,23 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { newProjectSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
+import { DrawerClose } from "../ui/drawer";
 
-const newProjectSchema = z.object({
-  projectName: z.string().min(1, {
-    message: "Must be at least 1 character.",
-  }),
-});
-
-export default function NewProjectForm({
-  closeBtn: CloseBtn,
-}: {
-  closeBtn: ReactNode;
-}) {
+export default function NewProjectForm() {
   const form = useForm<z.infer<typeof newProjectSchema>>({
     resolver: zodResolver(newProjectSchema),
     defaultValues: {
-      projectName: "",
+      habitName: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof newProjectSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof newProjectSchema>) {
+    const res = await createNewProject(values);
+
+    if (!res.success) console.error(res.error);
   }
 
   return (
@@ -46,7 +40,7 @@ export default function NewProjectForm({
       >
         <FormField
           control={form.control}
-          name="projectName"
+          name="habitName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Project Name</FormLabel>
@@ -61,11 +55,12 @@ export default function NewProjectForm({
           )}
         />
         <div className="flex items-center justify-between gap-5">
-          {CloseBtn}
-          <Button
-            type="submit"
-            className="flex-1/2 bg-purple-400 transition-all hover:-translate-y-0.5 hover:cursor-pointer"
-          >
+          <DrawerClose className="flex-1/2" asChild>
+            <Button className="hover-translate w-full" variant="outline">
+              Cancel
+            </Button>
+          </DrawerClose>
+          <Button type="submit" className="hover-translate flex-1/2">
             Submit
           </Button>
         </div>
