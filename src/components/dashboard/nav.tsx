@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import Notifications from "./notifications";
 import Profile from "./profile";
 
 export default function Nav() {
@@ -19,8 +18,7 @@ export default function Nav() {
         </TabsList>
       </Tabs>
 
-      <div className="flex items-center gap-5">
-        <Notifications />
+      <div className="flex items-center">
         <Profile />
       </div>
     </nav>
