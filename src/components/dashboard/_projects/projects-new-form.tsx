@@ -1,6 +1,8 @@
 "use client";
 
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { createNewProject } from "@/actions/newProject.action";
 import {
@@ -13,23 +15,56 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { IProjectsNewForm } from "@/lib/interfaces";
 import { newProjectSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../ui/button";
-import { DrawerClose } from "../ui/drawer";
+import { Button } from "../../ui/button";
+import { DrawerClose } from "../../ui/drawer";
 
-export default function NewProjectForm() {
+export default function ProjectsNewForm({ setProjects }: IProjectsNewForm) {
   const form = useForm<z.infer<typeof newProjectSchema>>({
     resolver: zodResolver(newProjectSchema),
     defaultValues: {
       habitName: "",
     },
   });
+  const [isPending, startTransition] = useTransition();
 
-  async function onSubmit(values: z.infer<typeof newProjectSchema>) {
-    const res = await createNewProject(values);
+  function onSubmit(values: z.infer<typeof newProjectSchema>) {
+    const optimisticId = Math.random().toString(36).substring(2, 9);
+    const optimisticProject = {
+      id: optimisticId,
+      habitName: values.habitName,
+      streak: 0,
+      userId: "temp", // TODO: Replace with current user's ID
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
-    if (!res.success) console.error(res.error);
+    setProjects((prev) => [optimisticProject, ...prev]);
+
+    startTransition(async () => {
+      const res = await createNewProject(values);
+
+      if (!res.success) {
+        console.error(res.error);
+        toast.error("Error creating project. Please try again.");
+
+        // Rollback optimistic update
+        setProjects((prev) =>
+          prev.filter((project) => project.id !== optimisticId),
+        );
+      } else {
+        toast.success("Project created successfully!");
+
+        // Replace optimistic project with real data
+        setProjects((prev) =>
+          prev.map((project) =>
+            project.id === optimisticId ? res.data : project,
+          ),
+        );
+      }
+    });
   }
 
   return (

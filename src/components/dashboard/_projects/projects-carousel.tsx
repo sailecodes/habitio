@@ -47,12 +47,12 @@ export function ProjectsCarousel({ projects }: IProjectsCarousel) {
         style={{ transform: `translateX(-${101.5 * currInd}%)` }}
       >
         {/* TODO:
-          - Order from most recent to oldest.
           - Add a sorter
           - Add a search bar  */}
         {projects.map((project) => (
           <ProjectsCard
             key={project.id}
+            id={project.id}
             name={project.habitName}
             streak={project.streak}
             startDate={getSimplifiedDate(project.createdAt)}

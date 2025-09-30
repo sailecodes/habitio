@@ -1,9 +1,9 @@
-import Projects from "@/components/dashboard/projects";
+import ProjectsRoot from "@/components/dashboard/_projects/projects-root";
 
 export default async function Dashboard() {
   return (
-    <div className="">
-      <Projects />
+    <div>
+      <ProjectsRoot />
     </div>
   );
 }

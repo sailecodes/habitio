@@ -1,18 +1,16 @@
 import Link from "next/link";
+import { IProjectsCard } from "@/lib/interfaces";
 
 export default function ProjectsCard({
+  id,
   name,
   streak,
   startDate,
-}: {
-  name: string;
-  streak: number;
-  startDate: string;
-}) {
+}: IProjectsCard) {
   return (
     <li>
       <Link
-        href="/dashboard/project-name"
+        href={`/dashboard/${id}`}
         className="card hover-translate flex w-[250px] flex-col"
       >
         <header className="text-subheader line-clamp-1">{name}</header>
