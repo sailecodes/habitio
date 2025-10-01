@@ -1,22 +1,22 @@
-import { TProject } from "./types";
+import { THabit } from "./types";
 
-export interface IProjects {
-  projectsData: TProject[];
+export interface IHabits {
+  habitsData: THabit[];
 }
 
-export interface IProjectsHeader {
-  setProjects: React.Dispatch<React.SetStateAction<TProject[]>>;
+export interface IHabitsHeader {
+  setHabits: React.Dispatch<React.SetStateAction<THabit[]>>;
 }
 
-export interface IProjectsNewForm {
-  setProjects: React.Dispatch<React.SetStateAction<TProject[]>>;
+export interface IHabitsNewForm {
+  setHabits: React.Dispatch<React.SetStateAction<THabit[]>>;
 }
 
-export interface IProjectsCarousel {
-  projects: TProject[];
+export interface IHabitsCarousel {
+  habits: THabit[];
 }
 
-export interface IProjectsCard {
+export interface IHabitsCard {
   id: string;
   name: string;
   streak: number;

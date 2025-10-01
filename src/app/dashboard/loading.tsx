@@ -12,7 +12,7 @@ export default function Loading() {
           <div>
             <Button disabled>
               <Plus />
-              <span>Add new project</span>
+              <span>Add new habit</span>
             </Button>
           </div>
         </div>
@@ -26,8 +26,11 @@ export default function Loading() {
             </button>
           </div>
           <ul className="flex items-center gap-5 py-2">
-            {Array.from([1, 2, 3, 4, 5]).map((project, ind) => (
-              <Skeleton className="card h-[138px] w-[250px]"></Skeleton>
+            {Array.from([1, 2, 3, 4, 5]).map((habit, ind) => (
+              <Skeleton
+                key={`skeleton-habit-card-${ind}`}
+                className="card h-[138px] w-[250px]"
+              ></Skeleton>
             ))}
           </ul>
         </div>

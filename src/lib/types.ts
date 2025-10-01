@@ -4,9 +4,9 @@ export type TServerActionResult = {
   data?: any;
 };
 
-export type TProject = {
+export type THabit = {
   id: string;
-  habitName: string;
+  name: string;
   streak: number;
   userId?: string;
   createdAt: Date;

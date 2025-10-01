@@ -19,10 +19,33 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
- * Model Project
+ * Model Habit
  * 
  */
-export type Project = $Result.DefaultSelection<Prisma.$ProjectPayload>
+export type Habit = $Result.DefaultSelection<Prisma.$HabitPayload>
+/**
+ * Model HabitDay
+ * 
+ */
+export type HabitDay = $Result.DefaultSelection<Prisma.$HabitDayPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const HabitProgress: {
+  SKIPPED: 'SKIPPED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED'
+};
+
+export type HabitProgress = (typeof HabitProgress)[keyof typeof HabitProgress]
+
+}
+
+export type HabitProgress = $Enums.HabitProgress
+
+export const HabitProgress: typeof $Enums.HabitProgress
 
 /**
  * ##  Prisma Client ʲˢ
@@ -153,14 +176,24 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.project`: Exposes CRUD operations for the **Project** model.
+   * `prisma.habit`: Exposes CRUD operations for the **Habit** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Projects
-    * const projects = await prisma.project.findMany()
+    * // Fetch zero or more Habits
+    * const habits = await prisma.habit.findMany()
     * ```
     */
-  get project(): Prisma.ProjectDelegate<ExtArgs, ClientOptions>;
+  get habit(): Prisma.HabitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.habitDay`: Exposes CRUD operations for the **HabitDay** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HabitDays
+    * const habitDays = await prisma.habitDay.findMany()
+    * ```
+    */
+  get habitDay(): Prisma.HabitDayDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -219,8 +252,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.16.2
-   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
+   * Prisma Client JS version: 6.16.3
+   * Query Engine version: bb420e667c1820a8c05a38023385f6cc7ef8e83a
    */
   export type PrismaVersion = {
     client: string
@@ -602,7 +635,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Project: 'Project'
+    Habit: 'Habit',
+    HabitDay: 'HabitDay'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -621,7 +655,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "project"
+      modelProps: "user" | "habit" | "habitDay"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -699,77 +733,151 @@ export namespace Prisma {
           }
         }
       }
-      Project: {
-        payload: Prisma.$ProjectPayload<ExtArgs>
-        fields: Prisma.ProjectFieldRefs
+      Habit: {
+        payload: Prisma.$HabitPayload<ExtArgs>
+        fields: Prisma.HabitFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.ProjectFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload> | null
+            args: Prisma.HabitFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.ProjectFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>
+            args: Prisma.HabitFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           findFirst: {
-            args: Prisma.ProjectFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload> | null
+            args: Prisma.HabitFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.ProjectFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>
+            args: Prisma.HabitFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           findMany: {
-            args: Prisma.ProjectFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>[]
+            args: Prisma.HabitFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>[]
           }
           create: {
-            args: Prisma.ProjectCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>
+            args: Prisma.HabitCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           createMany: {
-            args: Prisma.ProjectCreateManyArgs<ExtArgs>
+            args: Prisma.HabitCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.ProjectCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>[]
+            args: Prisma.HabitCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>[]
           }
           delete: {
-            args: Prisma.ProjectDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>
+            args: Prisma.HabitDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           update: {
-            args: Prisma.ProjectUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>
+            args: Prisma.HabitUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           deleteMany: {
-            args: Prisma.ProjectDeleteManyArgs<ExtArgs>
+            args: Prisma.HabitDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.ProjectUpdateManyArgs<ExtArgs>
+            args: Prisma.HabitUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.ProjectUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>[]
+            args: Prisma.HabitUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>[]
           }
           upsert: {
-            args: Prisma.ProjectUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ProjectPayload>
+            args: Prisma.HabitUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitPayload>
           }
           aggregate: {
-            args: Prisma.ProjectAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateProject>
+            args: Prisma.HabitAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHabit>
           }
           groupBy: {
-            args: Prisma.ProjectGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ProjectGroupByOutputType>[]
+            args: Prisma.HabitGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HabitGroupByOutputType>[]
           }
           count: {
-            args: Prisma.ProjectCountArgs<ExtArgs>
-            result: $Utils.Optional<ProjectCountAggregateOutputType> | number
+            args: Prisma.HabitCountArgs<ExtArgs>
+            result: $Utils.Optional<HabitCountAggregateOutputType> | number
+          }
+        }
+      }
+      HabitDay: {
+        payload: Prisma.$HabitDayPayload<ExtArgs>
+        fields: Prisma.HabitDayFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HabitDayFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HabitDayFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>
+          }
+          findFirst: {
+            args: Prisma.HabitDayFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HabitDayFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>
+          }
+          findMany: {
+            args: Prisma.HabitDayFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>[]
+          }
+          create: {
+            args: Prisma.HabitDayCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>
+          }
+          createMany: {
+            args: Prisma.HabitDayCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HabitDayCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>[]
+          }
+          delete: {
+            args: Prisma.HabitDayDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>
+          }
+          update: {
+            args: Prisma.HabitDayUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>
+          }
+          deleteMany: {
+            args: Prisma.HabitDayDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HabitDayUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HabitDayUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>[]
+          }
+          upsert: {
+            args: Prisma.HabitDayUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HabitDayPayload>
+          }
+          aggregate: {
+            args: Prisma.HabitDayAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHabitDay>
+          }
+          groupBy: {
+            args: Prisma.HabitDayGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HabitDayGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HabitDayCountArgs<ExtArgs>
+            result: $Utils.Optional<HabitDayCountAggregateOutputType> | number
           }
         }
       }
@@ -870,7 +978,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
-    project?: ProjectOmit
+    habit?: HabitOmit
+    habitDay?: HabitDayOmit
   }
 
   /* Types for Logging */
@@ -951,11 +1060,11 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    projects: number
+    habits: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    projects?: boolean | UserCountOutputTypeCountProjectsArgs
+    habits?: boolean | UserCountOutputTypeCountHabitsArgs
   }
 
   // Custom InputTypes
@@ -972,8 +1081,39 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProjectWhereInput
+  export type UserCountOutputTypeCountHabitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitWhereInput
+  }
+
+
+  /**
+   * Count Type HabitCountOutputType
+   */
+
+  export type HabitCountOutputType = {
+    habitDays: number
+  }
+
+  export type HabitCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habitDays?: boolean | HabitCountOutputTypeCountHabitDaysArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitCountOutputType
+     */
+    select?: HabitCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * HabitCountOutputType without action
+   */
+  export type HabitCountOutputTypeCountHabitDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitDayWhereInput
   }
 
 
@@ -1161,7 +1301,7 @@ export namespace Prisma {
     lastName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    projects?: boolean | User$projectsArgs<ExtArgs>
+    habits?: boolean | User$habitsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1197,7 +1337,7 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "firstName" | "lastName" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    projects?: boolean | User$projectsArgs<ExtArgs>
+    habits?: boolean | User$habitsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1206,7 +1346,7 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      projects: Prisma.$ProjectPayload<ExtArgs>[]
+      habits: Prisma.$HabitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1610,7 +1750,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    projects<T extends User$projectsArgs<ExtArgs> = {}>(args?: Subset<T, User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    habits<T extends User$habitsArgs<ExtArgs> = {}>(args?: Subset<T, User$habitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2035,27 +2175,27 @@ export namespace Prisma {
   }
 
   /**
-   * User.projects
+   * User.habits
    */
-  export type User$projectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$habitsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
-    where?: ProjectWhereInput
-    orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[]
-    cursor?: ProjectWhereUniqueInput
+    include?: HabitInclude<ExtArgs> | null
+    where?: HabitWhereInput
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
+    cursor?: HabitWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[]
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
   }
 
   /**
@@ -2078,46 +2218,46 @@ export namespace Prisma {
 
 
   /**
-   * Model Project
+   * Model Habit
    */
 
-  export type AggregateProject = {
-    _count: ProjectCountAggregateOutputType | null
-    _avg: ProjectAvgAggregateOutputType | null
-    _sum: ProjectSumAggregateOutputType | null
-    _min: ProjectMinAggregateOutputType | null
-    _max: ProjectMaxAggregateOutputType | null
+  export type AggregateHabit = {
+    _count: HabitCountAggregateOutputType | null
+    _avg: HabitAvgAggregateOutputType | null
+    _sum: HabitSumAggregateOutputType | null
+    _min: HabitMinAggregateOutputType | null
+    _max: HabitMaxAggregateOutputType | null
   }
 
-  export type ProjectAvgAggregateOutputType = {
+  export type HabitAvgAggregateOutputType = {
     streak: number | null
   }
 
-  export type ProjectSumAggregateOutputType = {
+  export type HabitSumAggregateOutputType = {
     streak: number | null
   }
 
-  export type ProjectMinAggregateOutputType = {
+  export type HabitMinAggregateOutputType = {
     id: string | null
-    habitName: string | null
+    name: string | null
     streak: number | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type ProjectMaxAggregateOutputType = {
+  export type HabitMaxAggregateOutputType = {
     id: string | null
-    habitName: string | null
+    name: string | null
     streak: number | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type ProjectCountAggregateOutputType = {
+  export type HabitCountAggregateOutputType = {
     id: number
-    habitName: number
+    name: number
     streak: number
     userId: number
     createdAt: number
@@ -2126,35 +2266,35 @@ export namespace Prisma {
   }
 
 
-  export type ProjectAvgAggregateInputType = {
+  export type HabitAvgAggregateInputType = {
     streak?: true
   }
 
-  export type ProjectSumAggregateInputType = {
+  export type HabitSumAggregateInputType = {
     streak?: true
   }
 
-  export type ProjectMinAggregateInputType = {
+  export type HabitMinAggregateInputType = {
     id?: true
-    habitName?: true
+    name?: true
     streak?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type ProjectMaxAggregateInputType = {
+  export type HabitMaxAggregateInputType = {
     id?: true
-    habitName?: true
+    name?: true
     streak?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type ProjectCountAggregateInputType = {
+  export type HabitCountAggregateInputType = {
     id?: true
-    habitName?: true
+    name?: true
     streak?: true
     userId?: true
     createdAt?: true
@@ -2162,312 +2302,317 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type ProjectAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Project to aggregate.
+     * Filter which Habit to aggregate.
      */
-    where?: ProjectWhereInput
+    where?: HabitWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Projects to fetch.
+     * Determine the order of Habits to fetch.
      */
-    orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[]
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ProjectWhereUniqueInput
+    cursor?: HabitWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Projects from the position of the cursor.
+     * Take `±n` Habits from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Projects.
+     * Skip the first `n` Habits.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Projects
+     * Count returned Habits
     **/
-    _count?: true | ProjectCountAggregateInputType
+    _count?: true | HabitCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ProjectAvgAggregateInputType
+    _avg?: HabitAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ProjectSumAggregateInputType
+    _sum?: HabitSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ProjectMinAggregateInputType
+    _min?: HabitMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ProjectMaxAggregateInputType
+    _max?: HabitMaxAggregateInputType
   }
 
-  export type GetProjectAggregateType<T extends ProjectAggregateArgs> = {
-        [P in keyof T & keyof AggregateProject]: P extends '_count' | 'count'
+  export type GetHabitAggregateType<T extends HabitAggregateArgs> = {
+        [P in keyof T & keyof AggregateHabit]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateProject[P]>
-      : GetScalarType<T[P], AggregateProject[P]>
+        : GetScalarType<T[P], AggregateHabit[P]>
+      : GetScalarType<T[P], AggregateHabit[P]>
   }
 
 
 
 
-  export type ProjectGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProjectWhereInput
-    orderBy?: ProjectOrderByWithAggregationInput | ProjectOrderByWithAggregationInput[]
-    by: ProjectScalarFieldEnum[] | ProjectScalarFieldEnum
-    having?: ProjectScalarWhereWithAggregatesInput
+  export type HabitGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitWhereInput
+    orderBy?: HabitOrderByWithAggregationInput | HabitOrderByWithAggregationInput[]
+    by: HabitScalarFieldEnum[] | HabitScalarFieldEnum
+    having?: HabitScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ProjectCountAggregateInputType | true
-    _avg?: ProjectAvgAggregateInputType
-    _sum?: ProjectSumAggregateInputType
-    _min?: ProjectMinAggregateInputType
-    _max?: ProjectMaxAggregateInputType
+    _count?: HabitCountAggregateInputType | true
+    _avg?: HabitAvgAggregateInputType
+    _sum?: HabitSumAggregateInputType
+    _min?: HabitMinAggregateInputType
+    _max?: HabitMaxAggregateInputType
   }
 
-  export type ProjectGroupByOutputType = {
+  export type HabitGroupByOutputType = {
     id: string
-    habitName: string
+    name: string
     streak: number
     userId: string
     createdAt: Date
     updatedAt: Date
-    _count: ProjectCountAggregateOutputType | null
-    _avg: ProjectAvgAggregateOutputType | null
-    _sum: ProjectSumAggregateOutputType | null
-    _min: ProjectMinAggregateOutputType | null
-    _max: ProjectMaxAggregateOutputType | null
+    _count: HabitCountAggregateOutputType | null
+    _avg: HabitAvgAggregateOutputType | null
+    _sum: HabitSumAggregateOutputType | null
+    _min: HabitMinAggregateOutputType | null
+    _max: HabitMaxAggregateOutputType | null
   }
 
-  type GetProjectGroupByPayload<T extends ProjectGroupByArgs> = Prisma.PrismaPromise<
+  type GetHabitGroupByPayload<T extends HabitGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ProjectGroupByOutputType, T['by']> &
+      PickEnumerable<HabitGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ProjectGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof HabitGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ProjectGroupByOutputType[P]>
-            : GetScalarType<T[P], ProjectGroupByOutputType[P]>
+              : GetScalarType<T[P], HabitGroupByOutputType[P]>
+            : GetScalarType<T[P], HabitGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ProjectSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type HabitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    habitName?: boolean
+    name?: boolean
     streak?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["project"]>
+    habitDays?: boolean | Habit$habitDaysArgs<ExtArgs>
+    _count?: boolean | HabitCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habit"]>
 
-  export type ProjectSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type HabitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    habitName?: boolean
+    name?: boolean
     streak?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["project"]>
+  }, ExtArgs["result"]["habit"]>
 
-  export type ProjectSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type HabitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    habitName?: boolean
+    name?: boolean
     streak?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["project"]>
+  }, ExtArgs["result"]["habit"]>
 
-  export type ProjectSelectScalar = {
+  export type HabitSelectScalar = {
     id?: boolean
-    habitName?: boolean
+    name?: boolean
     streak?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "habitName" | "streak" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
-  export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "streak" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["habit"]>
+  export type HabitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    habitDays?: boolean | Habit$habitDaysArgs<ExtArgs>
+    _count?: boolean | HabitCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type HabitIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $ProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Project"
+  export type $HabitPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Habit"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      habitDays: Prisma.$HabitDayPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      habitName: string
+      name: string
       streak: number
       userId: string
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["project"]>
+    }, ExtArgs["result"]["habit"]>
     composites: {}
   }
 
-  type ProjectGetPayload<S extends boolean | null | undefined | ProjectDefaultArgs> = $Result.GetResult<Prisma.$ProjectPayload, S>
+  type HabitGetPayload<S extends boolean | null | undefined | HabitDefaultArgs> = $Result.GetResult<Prisma.$HabitPayload, S>
 
-  type ProjectCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ProjectFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ProjectCountAggregateInputType | true
+  type HabitCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HabitFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HabitCountAggregateInputType | true
     }
 
-  export interface ProjectDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Project'], meta: { name: 'Project' } }
+  export interface HabitDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Habit'], meta: { name: 'Habit' } }
     /**
-     * Find zero or one Project that matches the filter.
-     * @param {ProjectFindUniqueArgs} args - Arguments to find a Project
+     * Find zero or one Habit that matches the filter.
+     * @param {HabitFindUniqueArgs} args - Arguments to find a Habit
      * @example
-     * // Get one Project
-     * const project = await prisma.project.findUnique({
+     * // Get one Habit
+     * const habit = await prisma.habit.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ProjectFindUniqueArgs>(args: SelectSubset<T, ProjectFindUniqueArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends HabitFindUniqueArgs>(args: SelectSubset<T, HabitFindUniqueArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Project that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Habit that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ProjectFindUniqueOrThrowArgs} args - Arguments to find a Project
+     * @param {HabitFindUniqueOrThrowArgs} args - Arguments to find a Habit
      * @example
-     * // Get one Project
-     * const project = await prisma.project.findUniqueOrThrow({
+     * // Get one Habit
+     * const habit = await prisma.habit.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ProjectFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends HabitFindUniqueOrThrowArgs>(args: SelectSubset<T, HabitFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Project that matches the filter.
+     * Find the first Habit that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProjectFindFirstArgs} args - Arguments to find a Project
+     * @param {HabitFindFirstArgs} args - Arguments to find a Habit
      * @example
-     * // Get one Project
-     * const project = await prisma.project.findFirst({
+     * // Get one Habit
+     * const habit = await prisma.habit.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ProjectFindFirstArgs>(args?: SelectSubset<T, ProjectFindFirstArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends HabitFindFirstArgs>(args?: SelectSubset<T, HabitFindFirstArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Project that matches the filter or
+     * Find the first Habit that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProjectFindFirstOrThrowArgs} args - Arguments to find a Project
+     * @param {HabitFindFirstOrThrowArgs} args - Arguments to find a Habit
      * @example
-     * // Get one Project
-     * const project = await prisma.project.findFirstOrThrow({
+     * // Get one Habit
+     * const habit = await prisma.habit.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ProjectFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends HabitFindFirstOrThrowArgs>(args?: SelectSubset<T, HabitFindFirstOrThrowArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Projects that matches the filter.
+     * Find zero or more Habits that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProjectFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {HabitFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Projects
-     * const projects = await prisma.project.findMany()
+     * // Get all Habits
+     * const habits = await prisma.habit.findMany()
      * 
-     * // Get first 10 Projects
-     * const projects = await prisma.project.findMany({ take: 10 })
+     * // Get first 10 Habits
+     * const habits = await prisma.habit.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const projectWithIdOnly = await prisma.project.findMany({ select: { id: true } })
+     * const habitWithIdOnly = await prisma.habit.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ProjectFindManyArgs>(args?: SelectSubset<T, ProjectFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends HabitFindManyArgs>(args?: SelectSubset<T, HabitFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Project.
-     * @param {ProjectCreateArgs} args - Arguments to create a Project.
+     * Create a Habit.
+     * @param {HabitCreateArgs} args - Arguments to create a Habit.
      * @example
-     * // Create one Project
-     * const Project = await prisma.project.create({
+     * // Create one Habit
+     * const Habit = await prisma.habit.create({
      *   data: {
-     *     // ... data to create a Project
+     *     // ... data to create a Habit
      *   }
      * })
      * 
      */
-    create<T extends ProjectCreateArgs>(args: SelectSubset<T, ProjectCreateArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends HabitCreateArgs>(args: SelectSubset<T, HabitCreateArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Projects.
-     * @param {ProjectCreateManyArgs} args - Arguments to create many Projects.
+     * Create many Habits.
+     * @param {HabitCreateManyArgs} args - Arguments to create many Habits.
      * @example
-     * // Create many Projects
-     * const project = await prisma.project.createMany({
+     * // Create many Habits
+     * const habit = await prisma.habit.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ProjectCreateManyArgs>(args?: SelectSubset<T, ProjectCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends HabitCreateManyArgs>(args?: SelectSubset<T, HabitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Projects and returns the data saved in the database.
-     * @param {ProjectCreateManyAndReturnArgs} args - Arguments to create many Projects.
+     * Create many Habits and returns the data saved in the database.
+     * @param {HabitCreateManyAndReturnArgs} args - Arguments to create many Habits.
      * @example
-     * // Create many Projects
-     * const project = await prisma.project.createManyAndReturn({
+     * // Create many Habits
+     * const habit = await prisma.habit.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Projects and only return the `id`
-     * const projectWithIdOnly = await prisma.project.createManyAndReturn({
+     * // Create many Habits and only return the `id`
+     * const habitWithIdOnly = await prisma.habit.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -2477,28 +2622,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ProjectCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends HabitCreateManyAndReturnArgs>(args?: SelectSubset<T, HabitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Project.
-     * @param {ProjectDeleteArgs} args - Arguments to delete one Project.
+     * Delete a Habit.
+     * @param {HabitDeleteArgs} args - Arguments to delete one Habit.
      * @example
-     * // Delete one Project
-     * const Project = await prisma.project.delete({
+     * // Delete one Habit
+     * const Habit = await prisma.habit.delete({
      *   where: {
-     *     // ... filter to delete one Project
+     *     // ... filter to delete one Habit
      *   }
      * })
      * 
      */
-    delete<T extends ProjectDeleteArgs>(args: SelectSubset<T, ProjectDeleteArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends HabitDeleteArgs>(args: SelectSubset<T, HabitDeleteArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Project.
-     * @param {ProjectUpdateArgs} args - Arguments to update one Project.
+     * Update one Habit.
+     * @param {HabitUpdateArgs} args - Arguments to update one Habit.
      * @example
-     * // Update one Project
-     * const project = await prisma.project.update({
+     * // Update one Habit
+     * const habit = await prisma.habit.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2508,30 +2653,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ProjectUpdateArgs>(args: SelectSubset<T, ProjectUpdateArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends HabitUpdateArgs>(args: SelectSubset<T, HabitUpdateArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Projects.
-     * @param {ProjectDeleteManyArgs} args - Arguments to filter Projects to delete.
+     * Delete zero or more Habits.
+     * @param {HabitDeleteManyArgs} args - Arguments to filter Habits to delete.
      * @example
-     * // Delete a few Projects
-     * const { count } = await prisma.project.deleteMany({
+     * // Delete a few Habits
+     * const { count } = await prisma.habit.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ProjectDeleteManyArgs>(args?: SelectSubset<T, ProjectDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends HabitDeleteManyArgs>(args?: SelectSubset<T, HabitDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Projects.
+     * Update zero or more Habits.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProjectUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {HabitUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Projects
-     * const project = await prisma.project.updateMany({
+     * // Update many Habits
+     * const habit = await prisma.habit.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2541,14 +2686,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ProjectUpdateManyArgs>(args: SelectSubset<T, ProjectUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends HabitUpdateManyArgs>(args: SelectSubset<T, HabitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Projects and returns the data updated in the database.
-     * @param {ProjectUpdateManyAndReturnArgs} args - Arguments to update many Projects.
+     * Update zero or more Habits and returns the data updated in the database.
+     * @param {HabitUpdateManyAndReturnArgs} args - Arguments to update many Habits.
      * @example
-     * // Update many Projects
-     * const project = await prisma.project.updateManyAndReturn({
+     * // Update many Habits
+     * const habit = await prisma.habit.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2557,8 +2702,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Projects and only return the `id`
-     * const projectWithIdOnly = await prisma.project.updateManyAndReturn({
+     * // Update zero or more Habits and only return the `id`
+     * const habitWithIdOnly = await prisma.habit.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -2571,56 +2716,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ProjectUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends HabitUpdateManyAndReturnArgs>(args: SelectSubset<T, HabitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Project.
-     * @param {ProjectUpsertArgs} args - Arguments to update or create a Project.
+     * Create or update one Habit.
+     * @param {HabitUpsertArgs} args - Arguments to update or create a Habit.
      * @example
-     * // Update or create a Project
-     * const project = await prisma.project.upsert({
+     * // Update or create a Habit
+     * const habit = await prisma.habit.upsert({
      *   create: {
-     *     // ... data to create a Project
+     *     // ... data to create a Habit
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Project we want to update
+     *     // ... the filter for the Habit we want to update
      *   }
      * })
      */
-    upsert<T extends ProjectUpsertArgs>(args: SelectSubset<T, ProjectUpsertArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends HabitUpsertArgs>(args: SelectSubset<T, HabitUpsertArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Projects.
+     * Count the number of Habits.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProjectCountArgs} args - Arguments to filter Projects to count.
+     * @param {HabitCountArgs} args - Arguments to filter Habits to count.
      * @example
-     * // Count the number of Projects
-     * const count = await prisma.project.count({
+     * // Count the number of Habits
+     * const count = await prisma.habit.count({
      *   where: {
-     *     // ... the filter for the Projects we want to count
+     *     // ... the filter for the Habits we want to count
      *   }
      * })
     **/
-    count<T extends ProjectCountArgs>(
-      args?: Subset<T, ProjectCountArgs>,
+    count<T extends HabitCountArgs>(
+      args?: Subset<T, HabitCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ProjectCountAggregateOutputType>
+          : GetScalarType<T['select'], HabitCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Project.
+     * Allows you to perform aggregations operations on a Habit.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProjectAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {HabitAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2640,13 +2785,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ProjectAggregateArgs>(args: Subset<T, ProjectAggregateArgs>): Prisma.PrismaPromise<GetProjectAggregateType<T>>
+    aggregate<T extends HabitAggregateArgs>(args: Subset<T, HabitAggregateArgs>): Prisma.PrismaPromise<GetHabitAggregateType<T>>
 
     /**
-     * Group by Project.
+     * Group by Habit.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ProjectGroupByArgs} args - Group by arguments.
+     * @param {HabitGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2661,14 +2806,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ProjectGroupByArgs,
+      T extends HabitGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ProjectGroupByArgs['orderBy'] }
-        : { orderBy?: ProjectGroupByArgs['orderBy'] },
+        ? { orderBy: HabitGroupByArgs['orderBy'] }
+        : { orderBy?: HabitGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2717,22 +2862,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ProjectGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, HabitGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHabitGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Project model
+   * Fields of the Habit model
    */
-  readonly fields: ProjectFieldRefs;
+  readonly fields: HabitFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Project.
+   * The delegate class that acts as a "Promise-like" for Habit.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__HabitClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    habitDays<T extends Habit$habitDaysArgs<ExtArgs> = {}>(args?: Subset<T, Habit$habitDaysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2759,426 +2905,1521 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Project model
+   * Fields of the Habit model
    */
-  interface ProjectFieldRefs {
-    readonly id: FieldRef<"Project", 'String'>
-    readonly habitName: FieldRef<"Project", 'String'>
-    readonly streak: FieldRef<"Project", 'Int'>
-    readonly userId: FieldRef<"Project", 'String'>
-    readonly createdAt: FieldRef<"Project", 'DateTime'>
-    readonly updatedAt: FieldRef<"Project", 'DateTime'>
+  interface HabitFieldRefs {
+    readonly id: FieldRef<"Habit", 'String'>
+    readonly name: FieldRef<"Habit", 'String'>
+    readonly streak: FieldRef<"Habit", 'Int'>
+    readonly userId: FieldRef<"Habit", 'String'>
+    readonly createdAt: FieldRef<"Habit", 'DateTime'>
+    readonly updatedAt: FieldRef<"Habit", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Project findUnique
+   * Habit findUnique
    */
-  export type ProjectFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * Filter, which Project to fetch.
+     * Filter, which Habit to fetch.
      */
-    where: ProjectWhereUniqueInput
+    where: HabitWhereUniqueInput
   }
 
   /**
-   * Project findUniqueOrThrow
+   * Habit findUniqueOrThrow
    */
-  export type ProjectFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * Filter, which Project to fetch.
+     * Filter, which Habit to fetch.
      */
-    where: ProjectWhereUniqueInput
+    where: HabitWhereUniqueInput
   }
 
   /**
-   * Project findFirst
+   * Habit findFirst
    */
-  export type ProjectFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * Filter, which Project to fetch.
+     * Filter, which Habit to fetch.
      */
-    where?: ProjectWhereInput
+    where?: HabitWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Projects to fetch.
+     * Determine the order of Habits to fetch.
      */
-    orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[]
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Projects.
+     * Sets the position for searching for Habits.
      */
-    cursor?: ProjectWhereUniqueInput
+    cursor?: HabitWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Projects from the position of the cursor.
+     * Take `±n` Habits from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Projects.
+     * Skip the first `n` Habits.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Projects.
+     * Filter by unique combinations of Habits.
      */
-    distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[]
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
   }
 
   /**
-   * Project findFirstOrThrow
+   * Habit findFirstOrThrow
    */
-  export type ProjectFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * Filter, which Project to fetch.
+     * Filter, which Habit to fetch.
      */
-    where?: ProjectWhereInput
+    where?: HabitWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Projects to fetch.
+     * Determine the order of Habits to fetch.
      */
-    orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[]
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Projects.
+     * Sets the position for searching for Habits.
      */
-    cursor?: ProjectWhereUniqueInput
+    cursor?: HabitWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Projects from the position of the cursor.
+     * Take `±n` Habits from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Projects.
+     * Skip the first `n` Habits.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Projects.
+     * Filter by unique combinations of Habits.
      */
-    distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[]
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
   }
 
   /**
-   * Project findMany
+   * Habit findMany
    */
-  export type ProjectFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * Filter, which Projects to fetch.
+     * Filter, which Habits to fetch.
      */
-    where?: ProjectWhereInput
+    where?: HabitWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Projects to fetch.
+     * Determine the order of Habits to fetch.
      */
-    orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[]
+    orderBy?: HabitOrderByWithRelationInput | HabitOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Projects.
+     * Sets the position for listing Habits.
      */
-    cursor?: ProjectWhereUniqueInput
+    cursor?: HabitWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Projects from the position of the cursor.
+     * Take `±n` Habits from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Projects.
+     * Skip the first `n` Habits.
      */
     skip?: number
-    distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[]
+    distinct?: HabitScalarFieldEnum | HabitScalarFieldEnum[]
   }
 
   /**
-   * Project create
+   * Habit create
    */
-  export type ProjectCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * The data needed to create a Project.
+     * The data needed to create a Habit.
      */
-    data: XOR<ProjectCreateInput, ProjectUncheckedCreateInput>
+    data: XOR<HabitCreateInput, HabitUncheckedCreateInput>
   }
 
   /**
-   * Project createMany
+   * Habit createMany
    */
-  export type ProjectCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Projects.
+     * The data used to create many Habits.
      */
-    data: ProjectCreateManyInput | ProjectCreateManyInput[]
+    data: HabitCreateManyInput | HabitCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Project createManyAndReturn
+   * Habit createManyAndReturn
    */
-  export type ProjectCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelectCreateManyAndReturn<ExtArgs> | null
+    select?: HabitSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
-     * The data used to create many Projects.
+     * The data used to create many Habits.
      */
-    data: ProjectCreateManyInput | ProjectCreateManyInput[]
+    data: HabitCreateManyInput | HabitCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: HabitIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Project update
+   * Habit update
    */
-  export type ProjectUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * The data needed to update a Project.
+     * The data needed to update a Habit.
      */
-    data: XOR<ProjectUpdateInput, ProjectUncheckedUpdateInput>
+    data: XOR<HabitUpdateInput, HabitUncheckedUpdateInput>
     /**
-     * Choose, which Project to update.
+     * Choose, which Habit to update.
      */
-    where: ProjectWhereUniqueInput
+    where: HabitWhereUniqueInput
   }
 
   /**
-   * Project updateMany
+   * Habit updateMany
    */
-  export type ProjectUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Projects.
+     * The data used to update Habits.
      */
-    data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyInput>
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyInput>
     /**
-     * Filter which Projects to update
+     * Filter which Habits to update
      */
-    where?: ProjectWhereInput
+    where?: HabitWhereInput
     /**
-     * Limit how many Projects to update.
+     * Limit how many Habits to update.
      */
     limit?: number
   }
 
   /**
-   * Project updateManyAndReturn
+   * Habit updateManyAndReturn
    */
-  export type ProjectUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: HabitSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
-     * The data used to update Projects.
+     * The data used to update Habits.
      */
-    data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyInput>
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyInput>
     /**
-     * Filter which Projects to update
+     * Filter which Habits to update
      */
-    where?: ProjectWhereInput
+    where?: HabitWhereInput
     /**
-     * Limit how many Projects to update.
+     * Limit how many Habits to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: HabitIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Project upsert
+   * Habit upsert
    */
-  export type ProjectUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * The filter to search for the Project to update in case it exists.
+     * The filter to search for the Habit to update in case it exists.
      */
-    where: ProjectWhereUniqueInput
+    where: HabitWhereUniqueInput
     /**
-     * In case the Project found by the `where` argument doesn't exist, create a new Project with this data.
+     * In case the Habit found by the `where` argument doesn't exist, create a new Habit with this data.
      */
-    create: XOR<ProjectCreateInput, ProjectUncheckedCreateInput>
+    create: XOR<HabitCreateInput, HabitUncheckedCreateInput>
     /**
-     * In case the Project was found with the provided `where` argument, update it with this data.
+     * In case the Habit was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ProjectUpdateInput, ProjectUncheckedUpdateInput>
+    update: XOR<HabitUpdateInput, HabitUncheckedUpdateInput>
   }
 
   /**
-   * Project delete
+   * Habit delete
    */
-  export type ProjectDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the Habit
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the Habit
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitInclude<ExtArgs> | null
     /**
-     * Filter which Project to delete.
+     * Filter which Habit to delete.
      */
-    where: ProjectWhereUniqueInput
+    where: HabitWhereUniqueInput
   }
 
   /**
-   * Project deleteMany
+   * Habit deleteMany
    */
-  export type ProjectDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HabitDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Projects to delete
+     * Filter which Habits to delete
      */
-    where?: ProjectWhereInput
+    where?: HabitWhereInput
     /**
-     * Limit how many Projects to delete.
+     * Limit how many Habits to delete.
      */
     limit?: number
   }
 
   /**
-   * Project without action
+   * Habit.habitDays
    */
-  export type ProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Habit$habitDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Project
+     * Select specific fields to fetch from the HabitDay
      */
-    select?: ProjectSelect<ExtArgs> | null
+    select?: HabitDaySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Project
+     * Omit specific fields from the HabitDay
      */
-    omit?: ProjectOmit<ExtArgs> | null
+    omit?: HabitDayOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ProjectInclude<ExtArgs> | null
+    include?: HabitDayInclude<ExtArgs> | null
+    where?: HabitDayWhereInput
+    orderBy?: HabitDayOrderByWithRelationInput | HabitDayOrderByWithRelationInput[]
+    cursor?: HabitDayWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HabitDayScalarFieldEnum | HabitDayScalarFieldEnum[]
+  }
+
+  /**
+   * Habit without action
+   */
+  export type HabitDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Habit
+     */
+    select?: HabitSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Habit
+     */
+    omit?: HabitOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model HabitDay
+   */
+
+  export type AggregateHabitDay = {
+    _count: HabitDayCountAggregateOutputType | null
+    _min: HabitDayMinAggregateOutputType | null
+    _max: HabitDayMaxAggregateOutputType | null
+  }
+
+  export type HabitDayMinAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    progress: $Enums.HabitProgress | null
+    habitId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HabitDayMaxAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    progress: $Enums.HabitProgress | null
+    habitId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HabitDayCountAggregateOutputType = {
+    id: number
+    date: number
+    progress: number
+    habitId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HabitDayMinAggregateInputType = {
+    id?: true
+    date?: true
+    progress?: true
+    habitId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HabitDayMaxAggregateInputType = {
+    id?: true
+    date?: true
+    progress?: true
+    habitId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HabitDayCountAggregateInputType = {
+    id?: true
+    date?: true
+    progress?: true
+    habitId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HabitDayAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HabitDay to aggregate.
+     */
+    where?: HabitDayWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HabitDays to fetch.
+     */
+    orderBy?: HabitDayOrderByWithRelationInput | HabitDayOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HabitDayWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HabitDays from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HabitDays.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HabitDays
+    **/
+    _count?: true | HabitDayCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HabitDayMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HabitDayMaxAggregateInputType
+  }
+
+  export type GetHabitDayAggregateType<T extends HabitDayAggregateArgs> = {
+        [P in keyof T & keyof AggregateHabitDay]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHabitDay[P]>
+      : GetScalarType<T[P], AggregateHabitDay[P]>
+  }
+
+
+
+
+  export type HabitDayGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HabitDayWhereInput
+    orderBy?: HabitDayOrderByWithAggregationInput | HabitDayOrderByWithAggregationInput[]
+    by: HabitDayScalarFieldEnum[] | HabitDayScalarFieldEnum
+    having?: HabitDayScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HabitDayCountAggregateInputType | true
+    _min?: HabitDayMinAggregateInputType
+    _max?: HabitDayMaxAggregateInputType
+  }
+
+  export type HabitDayGroupByOutputType = {
+    id: string
+    date: Date
+    progress: $Enums.HabitProgress
+    habitId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: HabitDayCountAggregateOutputType | null
+    _min: HabitDayMinAggregateOutputType | null
+    _max: HabitDayMaxAggregateOutputType | null
+  }
+
+  type GetHabitDayGroupByPayload<T extends HabitDayGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HabitDayGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HabitDayGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HabitDayGroupByOutputType[P]>
+            : GetScalarType<T[P], HabitDayGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HabitDaySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    progress?: boolean
+    habitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habitDay"]>
+
+  export type HabitDaySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    progress?: boolean
+    habitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habitDay"]>
+
+  export type HabitDaySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    progress?: boolean
+    habitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["habitDay"]>
+
+  export type HabitDaySelectScalar = {
+    id?: boolean
+    date?: boolean
+    progress?: boolean
+    habitId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type HabitDayOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "progress" | "habitId" | "createdAt" | "updatedAt", ExtArgs["result"]["habitDay"]>
+  export type HabitDayInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+  }
+  export type HabitDayIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+  }
+  export type HabitDayIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    habit?: boolean | HabitDefaultArgs<ExtArgs>
+  }
+
+  export type $HabitDayPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HabitDay"
+    objects: {
+      habit: Prisma.$HabitPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      date: Date
+      progress: $Enums.HabitProgress
+      habitId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["habitDay"]>
+    composites: {}
+  }
+
+  type HabitDayGetPayload<S extends boolean | null | undefined | HabitDayDefaultArgs> = $Result.GetResult<Prisma.$HabitDayPayload, S>
+
+  type HabitDayCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HabitDayFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HabitDayCountAggregateInputType | true
+    }
+
+  export interface HabitDayDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HabitDay'], meta: { name: 'HabitDay' } }
+    /**
+     * Find zero or one HabitDay that matches the filter.
+     * @param {HabitDayFindUniqueArgs} args - Arguments to find a HabitDay
+     * @example
+     * // Get one HabitDay
+     * const habitDay = await prisma.habitDay.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HabitDayFindUniqueArgs>(args: SelectSubset<T, HabitDayFindUniqueArgs<ExtArgs>>): Prisma__HabitDayClient<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HabitDay that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HabitDayFindUniqueOrThrowArgs} args - Arguments to find a HabitDay
+     * @example
+     * // Get one HabitDay
+     * const habitDay = await prisma.habitDay.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HabitDayFindUniqueOrThrowArgs>(args: SelectSubset<T, HabitDayFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HabitDayClient<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HabitDay that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitDayFindFirstArgs} args - Arguments to find a HabitDay
+     * @example
+     * // Get one HabitDay
+     * const habitDay = await prisma.habitDay.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HabitDayFindFirstArgs>(args?: SelectSubset<T, HabitDayFindFirstArgs<ExtArgs>>): Prisma__HabitDayClient<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HabitDay that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitDayFindFirstOrThrowArgs} args - Arguments to find a HabitDay
+     * @example
+     * // Get one HabitDay
+     * const habitDay = await prisma.habitDay.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HabitDayFindFirstOrThrowArgs>(args?: SelectSubset<T, HabitDayFindFirstOrThrowArgs<ExtArgs>>): Prisma__HabitDayClient<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HabitDays that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitDayFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HabitDays
+     * const habitDays = await prisma.habitDay.findMany()
+     * 
+     * // Get first 10 HabitDays
+     * const habitDays = await prisma.habitDay.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const habitDayWithIdOnly = await prisma.habitDay.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HabitDayFindManyArgs>(args?: SelectSubset<T, HabitDayFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HabitDay.
+     * @param {HabitDayCreateArgs} args - Arguments to create a HabitDay.
+     * @example
+     * // Create one HabitDay
+     * const HabitDay = await prisma.habitDay.create({
+     *   data: {
+     *     // ... data to create a HabitDay
+     *   }
+     * })
+     * 
+     */
+    create<T extends HabitDayCreateArgs>(args: SelectSubset<T, HabitDayCreateArgs<ExtArgs>>): Prisma__HabitDayClient<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HabitDays.
+     * @param {HabitDayCreateManyArgs} args - Arguments to create many HabitDays.
+     * @example
+     * // Create many HabitDays
+     * const habitDay = await prisma.habitDay.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HabitDayCreateManyArgs>(args?: SelectSubset<T, HabitDayCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HabitDays and returns the data saved in the database.
+     * @param {HabitDayCreateManyAndReturnArgs} args - Arguments to create many HabitDays.
+     * @example
+     * // Create many HabitDays
+     * const habitDay = await prisma.habitDay.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HabitDays and only return the `id`
+     * const habitDayWithIdOnly = await prisma.habitDay.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HabitDayCreateManyAndReturnArgs>(args?: SelectSubset<T, HabitDayCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HabitDay.
+     * @param {HabitDayDeleteArgs} args - Arguments to delete one HabitDay.
+     * @example
+     * // Delete one HabitDay
+     * const HabitDay = await prisma.habitDay.delete({
+     *   where: {
+     *     // ... filter to delete one HabitDay
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HabitDayDeleteArgs>(args: SelectSubset<T, HabitDayDeleteArgs<ExtArgs>>): Prisma__HabitDayClient<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HabitDay.
+     * @param {HabitDayUpdateArgs} args - Arguments to update one HabitDay.
+     * @example
+     * // Update one HabitDay
+     * const habitDay = await prisma.habitDay.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HabitDayUpdateArgs>(args: SelectSubset<T, HabitDayUpdateArgs<ExtArgs>>): Prisma__HabitDayClient<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HabitDays.
+     * @param {HabitDayDeleteManyArgs} args - Arguments to filter HabitDays to delete.
+     * @example
+     * // Delete a few HabitDays
+     * const { count } = await prisma.habitDay.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HabitDayDeleteManyArgs>(args?: SelectSubset<T, HabitDayDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HabitDays.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitDayUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HabitDays
+     * const habitDay = await prisma.habitDay.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HabitDayUpdateManyArgs>(args: SelectSubset<T, HabitDayUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HabitDays and returns the data updated in the database.
+     * @param {HabitDayUpdateManyAndReturnArgs} args - Arguments to update many HabitDays.
+     * @example
+     * // Update many HabitDays
+     * const habitDay = await prisma.habitDay.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HabitDays and only return the `id`
+     * const habitDayWithIdOnly = await prisma.habitDay.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HabitDayUpdateManyAndReturnArgs>(args: SelectSubset<T, HabitDayUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HabitDay.
+     * @param {HabitDayUpsertArgs} args - Arguments to update or create a HabitDay.
+     * @example
+     * // Update or create a HabitDay
+     * const habitDay = await prisma.habitDay.upsert({
+     *   create: {
+     *     // ... data to create a HabitDay
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HabitDay we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HabitDayUpsertArgs>(args: SelectSubset<T, HabitDayUpsertArgs<ExtArgs>>): Prisma__HabitDayClient<$Result.GetResult<Prisma.$HabitDayPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HabitDays.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitDayCountArgs} args - Arguments to filter HabitDays to count.
+     * @example
+     * // Count the number of HabitDays
+     * const count = await prisma.habitDay.count({
+     *   where: {
+     *     // ... the filter for the HabitDays we want to count
+     *   }
+     * })
+    **/
+    count<T extends HabitDayCountArgs>(
+      args?: Subset<T, HabitDayCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HabitDayCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HabitDay.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitDayAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HabitDayAggregateArgs>(args: Subset<T, HabitDayAggregateArgs>): Prisma.PrismaPromise<GetHabitDayAggregateType<T>>
+
+    /**
+     * Group by HabitDay.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HabitDayGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HabitDayGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HabitDayGroupByArgs['orderBy'] }
+        : { orderBy?: HabitDayGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HabitDayGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHabitDayGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HabitDay model
+   */
+  readonly fields: HabitDayFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HabitDay.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HabitDayClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    habit<T extends HabitDefaultArgs<ExtArgs> = {}>(args?: Subset<T, HabitDefaultArgs<ExtArgs>>): Prisma__HabitClient<$Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HabitDay model
+   */
+  interface HabitDayFieldRefs {
+    readonly id: FieldRef<"HabitDay", 'String'>
+    readonly date: FieldRef<"HabitDay", 'DateTime'>
+    readonly progress: FieldRef<"HabitDay", 'HabitProgress'>
+    readonly habitId: FieldRef<"HabitDay", 'String'>
+    readonly createdAt: FieldRef<"HabitDay", 'DateTime'>
+    readonly updatedAt: FieldRef<"HabitDay", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HabitDay findUnique
+   */
+  export type HabitDayFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitDay to fetch.
+     */
+    where: HabitDayWhereUniqueInput
+  }
+
+  /**
+   * HabitDay findUniqueOrThrow
+   */
+  export type HabitDayFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitDay to fetch.
+     */
+    where: HabitDayWhereUniqueInput
+  }
+
+  /**
+   * HabitDay findFirst
+   */
+  export type HabitDayFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitDay to fetch.
+     */
+    where?: HabitDayWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HabitDays to fetch.
+     */
+    orderBy?: HabitDayOrderByWithRelationInput | HabitDayOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HabitDays.
+     */
+    cursor?: HabitDayWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HabitDays from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HabitDays.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HabitDays.
+     */
+    distinct?: HabitDayScalarFieldEnum | HabitDayScalarFieldEnum[]
+  }
+
+  /**
+   * HabitDay findFirstOrThrow
+   */
+  export type HabitDayFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitDay to fetch.
+     */
+    where?: HabitDayWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HabitDays to fetch.
+     */
+    orderBy?: HabitDayOrderByWithRelationInput | HabitDayOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HabitDays.
+     */
+    cursor?: HabitDayWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HabitDays from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HabitDays.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HabitDays.
+     */
+    distinct?: HabitDayScalarFieldEnum | HabitDayScalarFieldEnum[]
+  }
+
+  /**
+   * HabitDay findMany
+   */
+  export type HabitDayFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * Filter, which HabitDays to fetch.
+     */
+    where?: HabitDayWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HabitDays to fetch.
+     */
+    orderBy?: HabitDayOrderByWithRelationInput | HabitDayOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HabitDays.
+     */
+    cursor?: HabitDayWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HabitDays from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HabitDays.
+     */
+    skip?: number
+    distinct?: HabitDayScalarFieldEnum | HabitDayScalarFieldEnum[]
+  }
+
+  /**
+   * HabitDay create
+   */
+  export type HabitDayCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HabitDay.
+     */
+    data: XOR<HabitDayCreateInput, HabitDayUncheckedCreateInput>
+  }
+
+  /**
+   * HabitDay createMany
+   */
+  export type HabitDayCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HabitDays.
+     */
+    data: HabitDayCreateManyInput | HabitDayCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HabitDay createManyAndReturn
+   */
+  export type HabitDayCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * The data used to create many HabitDays.
+     */
+    data: HabitDayCreateManyInput | HabitDayCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HabitDay update
+   */
+  export type HabitDayUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HabitDay.
+     */
+    data: XOR<HabitDayUpdateInput, HabitDayUncheckedUpdateInput>
+    /**
+     * Choose, which HabitDay to update.
+     */
+    where: HabitDayWhereUniqueInput
+  }
+
+  /**
+   * HabitDay updateMany
+   */
+  export type HabitDayUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HabitDays.
+     */
+    data: XOR<HabitDayUpdateManyMutationInput, HabitDayUncheckedUpdateManyInput>
+    /**
+     * Filter which HabitDays to update
+     */
+    where?: HabitDayWhereInput
+    /**
+     * Limit how many HabitDays to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HabitDay updateManyAndReturn
+   */
+  export type HabitDayUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * The data used to update HabitDays.
+     */
+    data: XOR<HabitDayUpdateManyMutationInput, HabitDayUncheckedUpdateManyInput>
+    /**
+     * Filter which HabitDays to update
+     */
+    where?: HabitDayWhereInput
+    /**
+     * Limit how many HabitDays to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HabitDay upsert
+   */
+  export type HabitDayUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HabitDay to update in case it exists.
+     */
+    where: HabitDayWhereUniqueInput
+    /**
+     * In case the HabitDay found by the `where` argument doesn't exist, create a new HabitDay with this data.
+     */
+    create: XOR<HabitDayCreateInput, HabitDayUncheckedCreateInput>
+    /**
+     * In case the HabitDay was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HabitDayUpdateInput, HabitDayUncheckedUpdateInput>
+  }
+
+  /**
+   * HabitDay delete
+   */
+  export type HabitDayDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
+    /**
+     * Filter which HabitDay to delete.
+     */
+    where: HabitDayWhereUniqueInput
+  }
+
+  /**
+   * HabitDay deleteMany
+   */
+  export type HabitDayDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HabitDays to delete
+     */
+    where?: HabitDayWhereInput
+    /**
+     * Limit how many HabitDays to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HabitDay without action
+   */
+  export type HabitDayDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HabitDay
+     */
+    select?: HabitDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HabitDay
+     */
+    omit?: HabitDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HabitDayInclude<ExtArgs> | null
   }
 
 
@@ -3209,16 +4450,28 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-  export const ProjectScalarFieldEnum: {
+  export const HabitScalarFieldEnum: {
     id: 'id',
-    habitName: 'habitName',
+    name: 'name',
     streak: 'streak',
     userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+  export type HabitScalarFieldEnum = (typeof HabitScalarFieldEnum)[keyof typeof HabitScalarFieldEnum]
+
+
+  export const HabitDayScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    progress: 'progress',
+    habitId: 'habitId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HabitDayScalarFieldEnum = (typeof HabitDayScalarFieldEnum)[keyof typeof HabitDayScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3285,6 +4538,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'HabitProgress'
+   */
+  export type EnumHabitProgressFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HabitProgress'>
+    
+
+
+  /**
+   * Reference to a field of type 'HabitProgress[]'
+   */
+  export type ListEnumHabitProgressFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HabitProgress[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3312,7 +4579,7 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    projects?: ProjectListRelationFilter
+    habits?: HabitListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3323,7 +4590,7 @@ export namespace Prisma {
     lastName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    projects?: ProjectOrderByRelationAggregateInput
+    habits?: HabitOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3337,7 +4604,7 @@ export namespace Prisma {
     lastName?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    projects?: ProjectListRelationFilter
+    habits?: HabitListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -3366,66 +4633,129 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
-  export type ProjectWhereInput = {
-    AND?: ProjectWhereInput | ProjectWhereInput[]
-    OR?: ProjectWhereInput[]
-    NOT?: ProjectWhereInput | ProjectWhereInput[]
-    id?: StringFilter<"Project"> | string
-    habitName?: StringFilter<"Project"> | string
-    streak?: IntFilter<"Project"> | number
-    userId?: StringFilter<"Project"> | string
-    createdAt?: DateTimeFilter<"Project"> | Date | string
-    updatedAt?: DateTimeFilter<"Project"> | Date | string
+  export type HabitWhereInput = {
+    AND?: HabitWhereInput | HabitWhereInput[]
+    OR?: HabitWhereInput[]
+    NOT?: HabitWhereInput | HabitWhereInput[]
+    id?: StringFilter<"Habit"> | string
+    name?: StringFilter<"Habit"> | string
+    streak?: IntFilter<"Habit"> | number
+    userId?: StringFilter<"Habit"> | string
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+    updatedAt?: DateTimeFilter<"Habit"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    habitDays?: HabitDayListRelationFilter
   }
 
-  export type ProjectOrderByWithRelationInput = {
+  export type HabitOrderByWithRelationInput = {
     id?: SortOrder
-    habitName?: SortOrder
+    name?: SortOrder
     streak?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
+    habitDays?: HabitDayOrderByRelationAggregateInput
   }
 
-  export type ProjectWhereUniqueInput = Prisma.AtLeast<{
+  export type HabitWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: ProjectWhereInput | ProjectWhereInput[]
-    OR?: ProjectWhereInput[]
-    NOT?: ProjectWhereInput | ProjectWhereInput[]
-    habitName?: StringFilter<"Project"> | string
-    streak?: IntFilter<"Project"> | number
-    userId?: StringFilter<"Project"> | string
-    createdAt?: DateTimeFilter<"Project"> | Date | string
-    updatedAt?: DateTimeFilter<"Project"> | Date | string
+    AND?: HabitWhereInput | HabitWhereInput[]
+    OR?: HabitWhereInput[]
+    NOT?: HabitWhereInput | HabitWhereInput[]
+    name?: StringFilter<"Habit"> | string
+    streak?: IntFilter<"Habit"> | number
+    userId?: StringFilter<"Habit"> | string
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+    updatedAt?: DateTimeFilter<"Habit"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    habitDays?: HabitDayListRelationFilter
   }, "id">
 
-  export type ProjectOrderByWithAggregationInput = {
+  export type HabitOrderByWithAggregationInput = {
     id?: SortOrder
-    habitName?: SortOrder
+    name?: SortOrder
     streak?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: ProjectCountOrderByAggregateInput
-    _avg?: ProjectAvgOrderByAggregateInput
-    _max?: ProjectMaxOrderByAggregateInput
-    _min?: ProjectMinOrderByAggregateInput
-    _sum?: ProjectSumOrderByAggregateInput
+    _count?: HabitCountOrderByAggregateInput
+    _avg?: HabitAvgOrderByAggregateInput
+    _max?: HabitMaxOrderByAggregateInput
+    _min?: HabitMinOrderByAggregateInput
+    _sum?: HabitSumOrderByAggregateInput
   }
 
-  export type ProjectScalarWhereWithAggregatesInput = {
-    AND?: ProjectScalarWhereWithAggregatesInput | ProjectScalarWhereWithAggregatesInput[]
-    OR?: ProjectScalarWhereWithAggregatesInput[]
-    NOT?: ProjectScalarWhereWithAggregatesInput | ProjectScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Project"> | string
-    habitName?: StringWithAggregatesFilter<"Project"> | string
-    streak?: IntWithAggregatesFilter<"Project"> | number
-    userId?: StringWithAggregatesFilter<"Project"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
+  export type HabitScalarWhereWithAggregatesInput = {
+    AND?: HabitScalarWhereWithAggregatesInput | HabitScalarWhereWithAggregatesInput[]
+    OR?: HabitScalarWhereWithAggregatesInput[]
+    NOT?: HabitScalarWhereWithAggregatesInput | HabitScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Habit"> | string
+    name?: StringWithAggregatesFilter<"Habit"> | string
+    streak?: IntWithAggregatesFilter<"Habit"> | number
+    userId?: StringWithAggregatesFilter<"Habit"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Habit"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Habit"> | Date | string
+  }
+
+  export type HabitDayWhereInput = {
+    AND?: HabitDayWhereInput | HabitDayWhereInput[]
+    OR?: HabitDayWhereInput[]
+    NOT?: HabitDayWhereInput | HabitDayWhereInput[]
+    id?: StringFilter<"HabitDay"> | string
+    date?: DateTimeFilter<"HabitDay"> | Date | string
+    progress?: EnumHabitProgressFilter<"HabitDay"> | $Enums.HabitProgress
+    habitId?: StringFilter<"HabitDay"> | string
+    createdAt?: DateTimeFilter<"HabitDay"> | Date | string
+    updatedAt?: DateTimeFilter<"HabitDay"> | Date | string
+    habit?: XOR<HabitScalarRelationFilter, HabitWhereInput>
+  }
+
+  export type HabitDayOrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    progress?: SortOrder
+    habitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    habit?: HabitOrderByWithRelationInput
+  }
+
+  export type HabitDayWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: HabitDayWhereInput | HabitDayWhereInput[]
+    OR?: HabitDayWhereInput[]
+    NOT?: HabitDayWhereInput | HabitDayWhereInput[]
+    date?: DateTimeFilter<"HabitDay"> | Date | string
+    progress?: EnumHabitProgressFilter<"HabitDay"> | $Enums.HabitProgress
+    habitId?: StringFilter<"HabitDay"> | string
+    createdAt?: DateTimeFilter<"HabitDay"> | Date | string
+    updatedAt?: DateTimeFilter<"HabitDay"> | Date | string
+    habit?: XOR<HabitScalarRelationFilter, HabitWhereInput>
+  }, "id">
+
+  export type HabitDayOrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    progress?: SortOrder
+    habitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HabitDayCountOrderByAggregateInput
+    _max?: HabitDayMaxOrderByAggregateInput
+    _min?: HabitDayMinOrderByAggregateInput
+  }
+
+  export type HabitDayScalarWhereWithAggregatesInput = {
+    AND?: HabitDayScalarWhereWithAggregatesInput | HabitDayScalarWhereWithAggregatesInput[]
+    OR?: HabitDayScalarWhereWithAggregatesInput[]
+    NOT?: HabitDayScalarWhereWithAggregatesInput | HabitDayScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"HabitDay"> | string
+    date?: DateTimeWithAggregatesFilter<"HabitDay"> | Date | string
+    progress?: EnumHabitProgressWithAggregatesFilter<"HabitDay"> | $Enums.HabitProgress
+    habitId?: StringWithAggregatesFilter<"HabitDay"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"HabitDay"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"HabitDay"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -3436,7 +4766,7 @@ export namespace Prisma {
     lastName: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    projects?: ProjectCreateNestedManyWithoutUserInput
+    habits?: HabitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3447,7 +4777,7 @@ export namespace Prisma {
     lastName: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    projects?: ProjectUncheckedCreateNestedManyWithoutUserInput
+    habits?: HabitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3458,7 +4788,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    projects?: ProjectUpdateManyWithoutUserNestedInput
+    habits?: HabitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3469,7 +4799,7 @@ export namespace Prisma {
     lastName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    projects?: ProjectUncheckedUpdateManyWithoutUserNestedInput
+    habits?: HabitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3502,64 +4832,130 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProjectCreateInput = {
+  export type HabitCreateInput = {
     id?: string
-    habitName: string
+    name: string
     streak?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutProjectsInput
+    user: UserCreateNestedOneWithoutHabitsInput
+    habitDays?: HabitDayCreateNestedManyWithoutHabitInput
   }
 
-  export type ProjectUncheckedCreateInput = {
+  export type HabitUncheckedCreateInput = {
     id?: string
-    habitName: string
+    name: string
+    streak?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    habitDays?: HabitDayUncheckedCreateNestedManyWithoutHabitInput
+  }
+
+  export type HabitUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    streak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+    habitDays?: HabitDayUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    streak?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitDays?: HabitDayUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitCreateManyInput = {
+    id?: string
+    name: string
     streak?: number
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type ProjectUpdateInput = {
+  export type HabitUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    habitName?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     streak?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutProjectsNestedInput
   }
 
-  export type ProjectUncheckedUpdateInput = {
+  export type HabitUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    habitName?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     streak?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProjectCreateManyInput = {
+  export type HabitDayCreateInput = {
     id?: string
-    habitName: string
-    streak?: number
-    userId: string
+    date: Date | string
+    progress?: $Enums.HabitProgress
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    habit: HabitCreateNestedOneWithoutHabitDaysInput
+  }
+
+  export type HabitDayUncheckedCreateInput = {
+    id?: string
+    date: Date | string
+    progress?: $Enums.HabitProgress
+    habitId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type ProjectUpdateManyMutationInput = {
+  export type HabitDayUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    habitName?: StringFieldUpdateOperationsInput | string
-    streak?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    progress?: EnumHabitProgressFieldUpdateOperationsInput | $Enums.HabitProgress
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habit?: HabitUpdateOneRequiredWithoutHabitDaysNestedInput
+  }
+
+  export type HabitDayUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    progress?: EnumHabitProgressFieldUpdateOperationsInput | $Enums.HabitProgress
+    habitId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProjectUncheckedUpdateManyInput = {
+  export type HabitDayCreateManyInput = {
+    id?: string
+    date: Date | string
+    progress?: $Enums.HabitProgress
+    habitId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HabitDayUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    habitName?: StringFieldUpdateOperationsInput | string
-    streak?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    progress?: EnumHabitProgressFieldUpdateOperationsInput | $Enums.HabitProgress
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitDayUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    progress?: EnumHabitProgressFieldUpdateOperationsInput | $Enums.HabitProgress
+    habitId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3590,13 +4986,13 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type ProjectListRelationFilter = {
-    every?: ProjectWhereInput
-    some?: ProjectWhereInput
-    none?: ProjectWhereInput
+  export type HabitListRelationFilter = {
+    every?: HabitWhereInput
+    some?: HabitWhereInput
+    none?: HabitWhereInput
   }
 
-  export type ProjectOrderByRelationAggregateInput = {
+  export type HabitOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3678,38 +5074,48 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type ProjectCountOrderByAggregateInput = {
+  export type HabitDayListRelationFilter = {
+    every?: HabitDayWhereInput
+    some?: HabitDayWhereInput
+    none?: HabitDayWhereInput
+  }
+
+  export type HabitDayOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HabitCountOrderByAggregateInput = {
     id?: SortOrder
-    habitName?: SortOrder
+    name?: SortOrder
     streak?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type ProjectAvgOrderByAggregateInput = {
+  export type HabitAvgOrderByAggregateInput = {
     streak?: SortOrder
   }
 
-  export type ProjectMaxOrderByAggregateInput = {
+  export type HabitMaxOrderByAggregateInput = {
     id?: SortOrder
-    habitName?: SortOrder
+    name?: SortOrder
     streak?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type ProjectMinOrderByAggregateInput = {
+  export type HabitMinOrderByAggregateInput = {
     id?: SortOrder
-    habitName?: SortOrder
+    name?: SortOrder
     streak?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type ProjectSumOrderByAggregateInput = {
+  export type HabitSumOrderByAggregateInput = {
     streak?: SortOrder
   }
 
@@ -3729,18 +5135,67 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type ProjectCreateNestedManyWithoutUserInput = {
-    create?: XOR<ProjectCreateWithoutUserInput, ProjectUncheckedCreateWithoutUserInput> | ProjectCreateWithoutUserInput[] | ProjectUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProjectCreateOrConnectWithoutUserInput | ProjectCreateOrConnectWithoutUserInput[]
-    createMany?: ProjectCreateManyUserInputEnvelope
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+  export type EnumHabitProgressFilter<$PrismaModel = never> = {
+    equals?: $Enums.HabitProgress | EnumHabitProgressFieldRefInput<$PrismaModel>
+    in?: $Enums.HabitProgress[] | ListEnumHabitProgressFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HabitProgress[] | ListEnumHabitProgressFieldRefInput<$PrismaModel>
+    not?: NestedEnumHabitProgressFilter<$PrismaModel> | $Enums.HabitProgress
   }
 
-  export type ProjectUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ProjectCreateWithoutUserInput, ProjectUncheckedCreateWithoutUserInput> | ProjectCreateWithoutUserInput[] | ProjectUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProjectCreateOrConnectWithoutUserInput | ProjectCreateOrConnectWithoutUserInput[]
-    createMany?: ProjectCreateManyUserInputEnvelope
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+  export type HabitScalarRelationFilter = {
+    is?: HabitWhereInput
+    isNot?: HabitWhereInput
+  }
+
+  export type HabitDayCountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    progress?: SortOrder
+    habitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HabitDayMaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    progress?: SortOrder
+    habitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HabitDayMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    progress?: SortOrder
+    habitId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumHabitProgressWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HabitProgress | EnumHabitProgressFieldRefInput<$PrismaModel>
+    in?: $Enums.HabitProgress[] | ListEnumHabitProgressFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HabitProgress[] | ListEnumHabitProgressFieldRefInput<$PrismaModel>
+    not?: NestedEnumHabitProgressWithAggregatesFilter<$PrismaModel> | $Enums.HabitProgress
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHabitProgressFilter<$PrismaModel>
+    _max?: NestedEnumHabitProgressFilter<$PrismaModel>
+  }
+
+  export type HabitCreateNestedManyWithoutUserInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+  }
+
+  export type HabitUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3751,38 +5206,52 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type ProjectUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ProjectCreateWithoutUserInput, ProjectUncheckedCreateWithoutUserInput> | ProjectCreateWithoutUserInput[] | ProjectUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProjectCreateOrConnectWithoutUserInput | ProjectCreateOrConnectWithoutUserInput[]
-    upsert?: ProjectUpsertWithWhereUniqueWithoutUserInput | ProjectUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ProjectCreateManyUserInputEnvelope
-    set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    update?: ProjectUpdateWithWhereUniqueWithoutUserInput | ProjectUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ProjectUpdateManyWithWhereWithoutUserInput | ProjectUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+  export type HabitUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    upsert?: HabitUpsertWithWhereUniqueWithoutUserInput | HabitUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    set?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    disconnect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    delete?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    update?: HabitUpdateWithWhereUniqueWithoutUserInput | HabitUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HabitUpdateManyWithWhereWithoutUserInput | HabitUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HabitScalarWhereInput | HabitScalarWhereInput[]
   }
 
-  export type ProjectUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ProjectCreateWithoutUserInput, ProjectUncheckedCreateWithoutUserInput> | ProjectCreateWithoutUserInput[] | ProjectUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ProjectCreateOrConnectWithoutUserInput | ProjectCreateOrConnectWithoutUserInput[]
-    upsert?: ProjectUpsertWithWhereUniqueWithoutUserInput | ProjectUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ProjectCreateManyUserInputEnvelope
-    set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    update?: ProjectUpdateWithWhereUniqueWithoutUserInput | ProjectUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ProjectUpdateManyWithWhereWithoutUserInput | ProjectUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+  export type HabitUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput> | HabitCreateWithoutUserInput[] | HabitUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: HabitCreateOrConnectWithoutUserInput | HabitCreateOrConnectWithoutUserInput[]
+    upsert?: HabitUpsertWithWhereUniqueWithoutUserInput | HabitUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: HabitCreateManyUserInputEnvelope
+    set?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    disconnect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    delete?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    connect?: HabitWhereUniqueInput | HabitWhereUniqueInput[]
+    update?: HabitUpdateWithWhereUniqueWithoutUserInput | HabitUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: HabitUpdateManyWithWhereWithoutUserInput | HabitUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: HabitScalarWhereInput | HabitScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutProjectsInput = {
-    create?: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProjectsInput
+  export type UserCreateNestedOneWithoutHabitsInput = {
+    create?: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHabitsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type HabitDayCreateNestedManyWithoutHabitInput = {
+    create?: XOR<HabitDayCreateWithoutHabitInput, HabitDayUncheckedCreateWithoutHabitInput> | HabitDayCreateWithoutHabitInput[] | HabitDayUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitDayCreateOrConnectWithoutHabitInput | HabitDayCreateOrConnectWithoutHabitInput[]
+    createMany?: HabitDayCreateManyHabitInputEnvelope
+    connect?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+  }
+
+  export type HabitDayUncheckedCreateNestedManyWithoutHabitInput = {
+    create?: XOR<HabitDayCreateWithoutHabitInput, HabitDayUncheckedCreateWithoutHabitInput> | HabitDayCreateWithoutHabitInput[] | HabitDayUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitDayCreateOrConnectWithoutHabitInput | HabitDayCreateOrConnectWithoutHabitInput[]
+    createMany?: HabitDayCreateManyHabitInputEnvelope
+    connect?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3793,12 +5262,58 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UserUpdateOneRequiredWithoutProjectsNestedInput = {
-    create?: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProjectsInput
-    upsert?: UserUpsertWithoutProjectsInput
+  export type UserUpdateOneRequiredWithoutHabitsNestedInput = {
+    create?: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHabitsInput
+    upsert?: UserUpsertWithoutHabitsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProjectsInput, UserUpdateWithoutProjectsInput>, UserUncheckedUpdateWithoutProjectsInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutHabitsInput, UserUpdateWithoutHabitsInput>, UserUncheckedUpdateWithoutHabitsInput>
+  }
+
+  export type HabitDayUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<HabitDayCreateWithoutHabitInput, HabitDayUncheckedCreateWithoutHabitInput> | HabitDayCreateWithoutHabitInput[] | HabitDayUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitDayCreateOrConnectWithoutHabitInput | HabitDayCreateOrConnectWithoutHabitInput[]
+    upsert?: HabitDayUpsertWithWhereUniqueWithoutHabitInput | HabitDayUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: HabitDayCreateManyHabitInputEnvelope
+    set?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+    disconnect?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+    delete?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+    connect?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+    update?: HabitDayUpdateWithWhereUniqueWithoutHabitInput | HabitDayUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: HabitDayUpdateManyWithWhereWithoutHabitInput | HabitDayUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: HabitDayScalarWhereInput | HabitDayScalarWhereInput[]
+  }
+
+  export type HabitDayUncheckedUpdateManyWithoutHabitNestedInput = {
+    create?: XOR<HabitDayCreateWithoutHabitInput, HabitDayUncheckedCreateWithoutHabitInput> | HabitDayCreateWithoutHabitInput[] | HabitDayUncheckedCreateWithoutHabitInput[]
+    connectOrCreate?: HabitDayCreateOrConnectWithoutHabitInput | HabitDayCreateOrConnectWithoutHabitInput[]
+    upsert?: HabitDayUpsertWithWhereUniqueWithoutHabitInput | HabitDayUpsertWithWhereUniqueWithoutHabitInput[]
+    createMany?: HabitDayCreateManyHabitInputEnvelope
+    set?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+    disconnect?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+    delete?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+    connect?: HabitDayWhereUniqueInput | HabitDayWhereUniqueInput[]
+    update?: HabitDayUpdateWithWhereUniqueWithoutHabitInput | HabitDayUpdateWithWhereUniqueWithoutHabitInput[]
+    updateMany?: HabitDayUpdateManyWithWhereWithoutHabitInput | HabitDayUpdateManyWithWhereWithoutHabitInput[]
+    deleteMany?: HabitDayScalarWhereInput | HabitDayScalarWhereInput[]
+  }
+
+  export type HabitCreateNestedOneWithoutHabitDaysInput = {
+    create?: XOR<HabitCreateWithoutHabitDaysInput, HabitUncheckedCreateWithoutHabitDaysInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutHabitDaysInput
+    connect?: HabitWhereUniqueInput
+  }
+
+  export type EnumHabitProgressFieldUpdateOperationsInput = {
+    set?: $Enums.HabitProgress
+  }
+
+  export type HabitUpdateOneRequiredWithoutHabitDaysNestedInput = {
+    create?: XOR<HabitCreateWithoutHabitDaysInput, HabitUncheckedCreateWithoutHabitDaysInput>
+    connectOrCreate?: HabitCreateOrConnectWithoutHabitDaysInput
+    upsert?: HabitUpsertWithoutHabitDaysInput
+    connect?: HabitWhereUniqueInput
+    update?: XOR<XOR<HabitUpdateToOneWithWhereWithoutHabitDaysInput, HabitUpdateWithoutHabitDaysInput>, HabitUncheckedUpdateWithoutHabitDaysInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -3895,61 +5410,80 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type ProjectCreateWithoutUserInput = {
+  export type NestedEnumHabitProgressFilter<$PrismaModel = never> = {
+    equals?: $Enums.HabitProgress | EnumHabitProgressFieldRefInput<$PrismaModel>
+    in?: $Enums.HabitProgress[] | ListEnumHabitProgressFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HabitProgress[] | ListEnumHabitProgressFieldRefInput<$PrismaModel>
+    not?: NestedEnumHabitProgressFilter<$PrismaModel> | $Enums.HabitProgress
+  }
+
+  export type NestedEnumHabitProgressWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HabitProgress | EnumHabitProgressFieldRefInput<$PrismaModel>
+    in?: $Enums.HabitProgress[] | ListEnumHabitProgressFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HabitProgress[] | ListEnumHabitProgressFieldRefInput<$PrismaModel>
+    not?: NestedEnumHabitProgressWithAggregatesFilter<$PrismaModel> | $Enums.HabitProgress
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHabitProgressFilter<$PrismaModel>
+    _max?: NestedEnumHabitProgressFilter<$PrismaModel>
+  }
+
+  export type HabitCreateWithoutUserInput = {
     id?: string
-    habitName: string
+    name: string
     streak?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    habitDays?: HabitDayCreateNestedManyWithoutHabitInput
   }
 
-  export type ProjectUncheckedCreateWithoutUserInput = {
+  export type HabitUncheckedCreateWithoutUserInput = {
     id?: string
-    habitName: string
+    name: string
     streak?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    habitDays?: HabitDayUncheckedCreateNestedManyWithoutHabitInput
   }
 
-  export type ProjectCreateOrConnectWithoutUserInput = {
-    where: ProjectWhereUniqueInput
-    create: XOR<ProjectCreateWithoutUserInput, ProjectUncheckedCreateWithoutUserInput>
+  export type HabitCreateOrConnectWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput>
   }
 
-  export type ProjectCreateManyUserInputEnvelope = {
-    data: ProjectCreateManyUserInput | ProjectCreateManyUserInput[]
+  export type HabitCreateManyUserInputEnvelope = {
+    data: HabitCreateManyUserInput | HabitCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
-  export type ProjectUpsertWithWhereUniqueWithoutUserInput = {
-    where: ProjectWhereUniqueInput
-    update: XOR<ProjectUpdateWithoutUserInput, ProjectUncheckedUpdateWithoutUserInput>
-    create: XOR<ProjectCreateWithoutUserInput, ProjectUncheckedCreateWithoutUserInput>
+  export type HabitUpsertWithWhereUniqueWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    update: XOR<HabitUpdateWithoutUserInput, HabitUncheckedUpdateWithoutUserInput>
+    create: XOR<HabitCreateWithoutUserInput, HabitUncheckedCreateWithoutUserInput>
   }
 
-  export type ProjectUpdateWithWhereUniqueWithoutUserInput = {
-    where: ProjectWhereUniqueInput
-    data: XOR<ProjectUpdateWithoutUserInput, ProjectUncheckedUpdateWithoutUserInput>
+  export type HabitUpdateWithWhereUniqueWithoutUserInput = {
+    where: HabitWhereUniqueInput
+    data: XOR<HabitUpdateWithoutUserInput, HabitUncheckedUpdateWithoutUserInput>
   }
 
-  export type ProjectUpdateManyWithWhereWithoutUserInput = {
-    where: ProjectScalarWhereInput
-    data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyWithoutUserInput>
+  export type HabitUpdateManyWithWhereWithoutUserInput = {
+    where: HabitScalarWhereInput
+    data: XOR<HabitUpdateManyMutationInput, HabitUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type ProjectScalarWhereInput = {
-    AND?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
-    OR?: ProjectScalarWhereInput[]
-    NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
-    id?: StringFilter<"Project"> | string
-    habitName?: StringFilter<"Project"> | string
-    streak?: IntFilter<"Project"> | number
-    userId?: StringFilter<"Project"> | string
-    createdAt?: DateTimeFilter<"Project"> | Date | string
-    updatedAt?: DateTimeFilter<"Project"> | Date | string
+  export type HabitScalarWhereInput = {
+    AND?: HabitScalarWhereInput | HabitScalarWhereInput[]
+    OR?: HabitScalarWhereInput[]
+    NOT?: HabitScalarWhereInput | HabitScalarWhereInput[]
+    id?: StringFilter<"Habit"> | string
+    name?: StringFilter<"Habit"> | string
+    streak?: IntFilter<"Habit"> | number
+    userId?: StringFilter<"Habit"> | string
+    createdAt?: DateTimeFilter<"Habit"> | Date | string
+    updatedAt?: DateTimeFilter<"Habit"> | Date | string
   }
 
-  export type UserCreateWithoutProjectsInput = {
+  export type UserCreateWithoutHabitsInput = {
     id?: string
     email: string
     username: string
@@ -3959,7 +5493,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserUncheckedCreateWithoutProjectsInput = {
+  export type UserUncheckedCreateWithoutHabitsInput = {
     id?: string
     email: string
     username: string
@@ -3969,70 +5503,210 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserCreateOrConnectWithoutProjectsInput = {
+  export type UserCreateOrConnectWithoutHabitsInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
+    create: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
   }
 
-  export type UserUpsertWithoutProjectsInput = {
-    update: XOR<UserUpdateWithoutProjectsInput, UserUncheckedUpdateWithoutProjectsInput>
-    create: XOR<UserCreateWithoutProjectsInput, UserUncheckedCreateWithoutProjectsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutProjectsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutProjectsInput, UserUncheckedUpdateWithoutProjectsInput>
-  }
-
-  export type UserUpdateWithoutProjectsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUncheckedUpdateWithoutProjectsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ProjectCreateManyUserInput = {
+  export type HabitDayCreateWithoutHabitInput = {
     id?: string
-    habitName: string
+    date: Date | string
+    progress?: $Enums.HabitProgress
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HabitDayUncheckedCreateWithoutHabitInput = {
+    id?: string
+    date: Date | string
+    progress?: $Enums.HabitProgress
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HabitDayCreateOrConnectWithoutHabitInput = {
+    where: HabitDayWhereUniqueInput
+    create: XOR<HabitDayCreateWithoutHabitInput, HabitDayUncheckedCreateWithoutHabitInput>
+  }
+
+  export type HabitDayCreateManyHabitInputEnvelope = {
+    data: HabitDayCreateManyHabitInput | HabitDayCreateManyHabitInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutHabitsInput = {
+    update: XOR<UserUpdateWithoutHabitsInput, UserUncheckedUpdateWithoutHabitsInput>
+    create: XOR<UserCreateWithoutHabitsInput, UserUncheckedCreateWithoutHabitsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutHabitsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutHabitsInput, UserUncheckedUpdateWithoutHabitsInput>
+  }
+
+  export type UserUpdateWithoutHabitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutHabitsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitDayUpsertWithWhereUniqueWithoutHabitInput = {
+    where: HabitDayWhereUniqueInput
+    update: XOR<HabitDayUpdateWithoutHabitInput, HabitDayUncheckedUpdateWithoutHabitInput>
+    create: XOR<HabitDayCreateWithoutHabitInput, HabitDayUncheckedCreateWithoutHabitInput>
+  }
+
+  export type HabitDayUpdateWithWhereUniqueWithoutHabitInput = {
+    where: HabitDayWhereUniqueInput
+    data: XOR<HabitDayUpdateWithoutHabitInput, HabitDayUncheckedUpdateWithoutHabitInput>
+  }
+
+  export type HabitDayUpdateManyWithWhereWithoutHabitInput = {
+    where: HabitDayScalarWhereInput
+    data: XOR<HabitDayUpdateManyMutationInput, HabitDayUncheckedUpdateManyWithoutHabitInput>
+  }
+
+  export type HabitDayScalarWhereInput = {
+    AND?: HabitDayScalarWhereInput | HabitDayScalarWhereInput[]
+    OR?: HabitDayScalarWhereInput[]
+    NOT?: HabitDayScalarWhereInput | HabitDayScalarWhereInput[]
+    id?: StringFilter<"HabitDay"> | string
+    date?: DateTimeFilter<"HabitDay"> | Date | string
+    progress?: EnumHabitProgressFilter<"HabitDay"> | $Enums.HabitProgress
+    habitId?: StringFilter<"HabitDay"> | string
+    createdAt?: DateTimeFilter<"HabitDay"> | Date | string
+    updatedAt?: DateTimeFilter<"HabitDay"> | Date | string
+  }
+
+  export type HabitCreateWithoutHabitDaysInput = {
+    id?: string
+    name: string
+    streak?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutHabitsInput
+  }
+
+  export type HabitUncheckedCreateWithoutHabitDaysInput = {
+    id?: string
+    name: string
+    streak?: number
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HabitCreateOrConnectWithoutHabitDaysInput = {
+    where: HabitWhereUniqueInput
+    create: XOR<HabitCreateWithoutHabitDaysInput, HabitUncheckedCreateWithoutHabitDaysInput>
+  }
+
+  export type HabitUpsertWithoutHabitDaysInput = {
+    update: XOR<HabitUpdateWithoutHabitDaysInput, HabitUncheckedUpdateWithoutHabitDaysInput>
+    create: XOR<HabitCreateWithoutHabitDaysInput, HabitUncheckedCreateWithoutHabitDaysInput>
+    where?: HabitWhereInput
+  }
+
+  export type HabitUpdateToOneWithWhereWithoutHabitDaysInput = {
+    where?: HabitWhereInput
+    data: XOR<HabitUpdateWithoutHabitDaysInput, HabitUncheckedUpdateWithoutHabitDaysInput>
+  }
+
+  export type HabitUpdateWithoutHabitDaysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    streak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHabitsNestedInput
+  }
+
+  export type HabitUncheckedUpdateWithoutHabitDaysInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    streak?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitCreateManyUserInput = {
+    id?: string
+    name: string
     streak?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type ProjectUpdateWithoutUserInput = {
+  export type HabitUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    habitName?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    streak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitDays?: HabitDayUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    streak?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    habitDays?: HabitDayUncheckedUpdateManyWithoutHabitNestedInput
+  }
+
+  export type HabitUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     streak?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProjectUncheckedUpdateWithoutUserInput = {
+  export type HabitDayCreateManyHabitInput = {
+    id?: string
+    date: Date | string
+    progress?: $Enums.HabitProgress
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HabitDayUpdateWithoutHabitInput = {
     id?: StringFieldUpdateOperationsInput | string
-    habitName?: StringFieldUpdateOperationsInput | string
-    streak?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    progress?: EnumHabitProgressFieldUpdateOperationsInput | $Enums.HabitProgress
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ProjectUncheckedUpdateManyWithoutUserInput = {
+  export type HabitDayUncheckedUpdateWithoutHabitInput = {
     id?: StringFieldUpdateOperationsInput | string
-    habitName?: StringFieldUpdateOperationsInput | string
-    streak?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    progress?: EnumHabitProgressFieldUpdateOperationsInput | $Enums.HabitProgress
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HabitDayUncheckedUpdateManyWithoutHabitInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    progress?: EnumHabitProgressFieldUpdateOperationsInput | $Enums.HabitProgress
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

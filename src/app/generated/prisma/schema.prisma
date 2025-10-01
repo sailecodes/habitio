@@ -15,24 +15,42 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  username  String    @unique
+  id        String  @id @default(uuid())
+  email     String  @unique
+  username  String  @unique
   firstName String
   lastName  String
-  projects  Project[]
+  habits    Habit[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Project {
-  id        String @id @default(uuid())
-  habitName String
-  streak    Int    @default(0)
+model Habit {
+  id        String     @id @default(uuid())
+  name      String
+  streak    Int        @default(0)
   userId    String
-  user      User   @relation(fields: [userId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
+  habitDays HabitDay[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model HabitDay {
+  id       String        @id @default(uuid())
+  date     DateTime
+  progress HabitProgress @default(IN_PROGRESS)
+  habitId  String
+  habit    Habit         @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum HabitProgress {
+  SKIPPED
+  IN_PROGRESS
+  COMPLETED
 }

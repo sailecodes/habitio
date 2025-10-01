@@ -1,9 +1,9 @@
-import ProjectsRoot from "@/components/dashboard/_projects/projects-root";
+import HabitsRoot from "@/components/dashboard/_habits/habits-root";
 
 export default async function Dashboard() {
   return (
     <div>
-      <ProjectsRoot />
+      <HabitsRoot />
     </div>
   );
 }
