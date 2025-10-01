@@ -25,6 +25,14 @@ export function ProjectsCarousel({ projects }: IProjectsCarousel) {
     setCurrInd(currInd + 1);
   }
 
+  if (projects.length === 0) {
+    return (
+      <div className="text-subheader grid h-[154px] w-full place-items-center py-2">
+        Create a new project!
+      </div>
+    );
+  }
+
   return (
     <div className="w-[1330px] overflow-x-hidden">
       <div className="flex items-center gap-5">

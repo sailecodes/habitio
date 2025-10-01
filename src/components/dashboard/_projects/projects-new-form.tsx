@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -29,6 +29,7 @@ export default function ProjectsNewForm({ setProjects }: IProjectsNewForm) {
     },
   });
   const [isPending, startTransition] = useTransition();
+  const drawerCloseRef = useRef<HTMLButtonElement>(null);
 
   function onSubmit(values: z.infer<typeof newProjectSchema>) {
     const optimisticId = Math.random().toString(36).substring(2, 9);
@@ -42,6 +43,8 @@ export default function ProjectsNewForm({ setProjects }: IProjectsNewForm) {
     };
 
     setProjects((prev) => [optimisticProject, ...prev]);
+
+    drawerCloseRef.current?.click();
 
     startTransition(async () => {
       const res = await createNewProject(values);
@@ -91,11 +94,20 @@ export default function ProjectsNewForm({ setProjects }: IProjectsNewForm) {
         />
         <div className="flex items-center justify-between gap-5">
           <DrawerClose className="flex-1/2" asChild>
-            <Button className="hover-translate w-full" variant="outline">
+            <Button
+              className="hover-translate w-full"
+              variant="outline"
+              ref={drawerCloseRef}
+              disabled={isPending}
+            >
               Cancel
             </Button>
           </DrawerClose>
-          <Button type="submit" className="hover-translate flex-1/2">
+          <Button
+            type="submit"
+            className="hover-translate flex-1/2"
+            disabled={isPending}
+          >
             Submit
           </Button>
         </div>

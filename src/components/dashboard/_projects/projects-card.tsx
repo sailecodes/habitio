@@ -10,7 +10,7 @@ export default function ProjectsCard({
   return (
     <li>
       <Link
-        href={`/dashboard/${id}`}
+        href={`/dashboard/${name}/${id}`}
         className="card hover-translate flex w-[250px] flex-col"
       >
         <header className="text-subheader line-clamp-1">{name}</header>
