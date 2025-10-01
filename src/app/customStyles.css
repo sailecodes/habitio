@@ -16,6 +16,8 @@ body {
     @apply mx-auto w-full max-w-7xl p-10;
   }
 
+  /*  */
+
   .text-title {
     @apply text-6xl font-medium -tracking-[3px];
   }
@@ -30,6 +32,10 @@ body {
 
   .card {
     @apply rounded-md border-1 p-5 shadow-md;
+  }
+
+  .hover-pointer {
+    @apply hover:cursor-pointer;
   }
 
   .hover-translate {
