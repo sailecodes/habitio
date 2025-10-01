@@ -9,8 +9,6 @@ function PCalendarDay({ day }: React.ComponentProps<typeof DayButton>) {
   const key = day.date.toISOString().split("T")[0];
   let style = "";
 
-  console.log(key);
-
   if (key === new Date().toISOString().split("T")[0]) style = "";
   if (key.includes("3")) style = "bg-green-400 text-white font-bold";
   else if (key.includes("4")) style = "bg-orange-400 text-white font-bold";

@@ -19,7 +19,7 @@ body {
   /*  */
 
   .text-title {
-    @apply text-6xl font-medium -tracking-[3px];
+    @apply text-5xl font-medium -tracking-[3px];
   }
 
   .text-header {

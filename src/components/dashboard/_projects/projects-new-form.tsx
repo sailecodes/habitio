@@ -81,7 +81,7 @@ export default function ProjectsNewForm({ setProjects }: IProjectsNewForm) {
           name="habitName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Name</FormLabel>
+              <FormLabel>Habit</FormLabel>
               <FormControl>
                 <Input placeholder="Walk my cat" {...field} />
               </FormControl>

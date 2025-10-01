@@ -1,6 +1,9 @@
 "use client";
 
+import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { IProjects } from "@/lib/interfaces";
 import { TProject } from "@/lib/types";
 import { ProjectsCarousel } from "./projects-carousel";
