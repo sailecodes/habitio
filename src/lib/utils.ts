@@ -12,3 +12,15 @@ export function getSimplifiedDate(date: Date) {
     year: "numeric",
   });
 }
+
+export function getNewDate(date?: Date) {
+  const newDate = new Date(date || Date.now());
+  newDate.setHours(0, 0, 0, 0);
+  return newDate;
+}
+
+export function getLocalDay(date: Date) {
+  const offset = date.getTimezoneOffset();
+  const localDate = new Date(date.getTime() - offset * 60 * 1000);
+  return localDate.toISOString().split("T")[0];
+}

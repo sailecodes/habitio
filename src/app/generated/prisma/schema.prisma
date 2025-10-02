@@ -40,7 +40,7 @@ model Habit {
 
 model HabitDay {
   id       String        @id @default(uuid())
-  date     DateTime
+  date     DateTime      @default(now())
   progress HabitProgress @default(IN_PROGRESS)
   habitId  String
   habit    Habit         @relation(fields: [habitId], references: [id], onDelete: Cascade)

@@ -13,7 +13,7 @@ export async function createNewHabit(
       newHabitSchema.safeParse(data);
 
     if (parseError) {
-      return { success: false, error: `[ERROR PARSING] ${parseError}` };
+      return { success: false, error: `[ERR] ${parseError}` };
     }
 
     // TODO: Replace with actual user ID
@@ -26,6 +26,6 @@ export async function createNewHabit(
 
     return { success: true, data: newHabit };
   } catch (e) {
-    return { success: false, error: `[ERROR CREATING NEW PROJECT] ${e}` };
+    return { success: false, error: `[ERR] ${e}` };
   }
 }

@@ -4900,7 +4900,7 @@ export namespace Prisma {
 
   export type HabitDayCreateInput = {
     id?: string
-    date: Date | string
+    date?: Date | string
     progress?: $Enums.HabitProgress
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4909,7 +4909,7 @@ export namespace Prisma {
 
   export type HabitDayUncheckedCreateInput = {
     id?: string
-    date: Date | string
+    date?: Date | string
     progress?: $Enums.HabitProgress
     habitId: string
     createdAt?: Date | string
@@ -4936,7 +4936,7 @@ export namespace Prisma {
 
   export type HabitDayCreateManyInput = {
     id?: string
-    date: Date | string
+    date?: Date | string
     progress?: $Enums.HabitProgress
     habitId: string
     createdAt?: Date | string
@@ -5510,7 +5510,7 @@ export namespace Prisma {
 
   export type HabitDayCreateWithoutHabitInput = {
     id?: string
-    date: Date | string
+    date?: Date | string
     progress?: $Enums.HabitProgress
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5518,7 +5518,7 @@ export namespace Prisma {
 
   export type HabitDayUncheckedCreateWithoutHabitInput = {
     id?: string
-    date: Date | string
+    date?: Date | string
     progress?: $Enums.HabitProgress
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5681,7 +5681,7 @@ export namespace Prisma {
 
   export type HabitDayCreateManyHabitInput = {
     id?: string
-    date: Date | string
+    date?: Date | string
     progress?: $Enums.HabitProgress
     createdAt?: Date | string
     updatedAt?: Date | string
