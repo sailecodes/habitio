@@ -1,4 +1,4 @@
-import { THabit } from "./types";
+import { THabit, THabitDay } from "./types";
 
 export interface IHabits {
   habitsData: THabit[];
@@ -21,4 +21,28 @@ export interface IHabitsCard {
   name: string;
   streak: number;
   startDate: string;
+}
+
+export interface IHabit {
+  params: Promise<{ habitName: string; habitId: string }>;
+}
+
+export interface IHabitContent {
+  habit: THabit;
+}
+
+export interface IHabitHeaderProps {
+  name: string;
+  streak: number;
+}
+
+export interface IHabitProgressBtns {
+  habitId: string;
+  habitDays: THabitDay[];
+  setHabitDays: React.Dispatch<React.SetStateAction<THabitDay[]>>;
+}
+
+export interface IHabitCalendarProps {
+  createdAt: Date;
+  habitDays: THabitDay[];
 }

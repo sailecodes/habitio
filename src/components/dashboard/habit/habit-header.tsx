@@ -1,9 +1,6 @@
-interface HabitHeaderProps {
-  name: string;
-  streak: number;
-}
+import { IHabitHeaderProps } from "@/lib/interfaces";
 
-export default function HabitHeader({ name, streak }: HabitHeaderProps) {
+export default function HabitHeader({ name, streak }: IHabitHeaderProps) {
   return (
     <header className="flex items-end justify-between gap-10">
       <span className="text-title">{name}</span>

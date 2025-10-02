@@ -1,8 +1,36 @@
 "use server";
 
+import z from "zod";
 import { HabitProgress } from "@/app/generated/prisma";
 import prisma from "@/lib/prisma/prismaClient";
+import { newHabitSchema } from "@/lib/schemas";
 import { TServerActionResult } from "@/lib/types";
+import { getLocalDay, getNewDate } from "@/lib/utils";
+
+export async function createNewHabit(
+  data: z.infer<typeof newHabitSchema>,
+): Promise<TServerActionResult> {
+  try {
+    const { data: parsedData, error: parseError } =
+      newHabitSchema.safeParse(data);
+
+    if (parseError) {
+      return { success: false, error: `[ERR] ${parseError}` };
+    }
+
+    // TODO: Replace with actual user ID
+    const newHabit = await prisma.habit.create({
+      data: {
+        userId: "537027d9-698c-4c2a-88e7-1504130865f7",
+        ...parsedData,
+      },
+    });
+
+    return { success: true, data: newHabit };
+  } catch (e) {
+    return { success: false, error: `[ERR] ${e}` };
+  }
+}
 
 export async function updateDailyProgress(
   habitId: string,
@@ -18,13 +46,14 @@ export async function updateDailyProgress(
       return { success: false, error: "[ERR] Habit not found" };
     }
 
-    const currDate = new Date();
-    currDate.setHours(0, 0, 0, 0);
-    const currDateStr = currDate.toISOString().split("T")[0];
+    const currDate = getNewDate();
+    const currDay = getLocalDay(currDate);
 
-    const hd = habit.habitDays.find(
-      (hd) => hd.date.toISOString().split("T")[0] === currDateStr,
-    );
+    const hd = habit.habitDays.find((hd) => {
+      const hdDate = getNewDate(hd.date);
+
+      return getLocalDay(hdDate) === currDay;
+    });
 
     let updatedHabitDay = null;
 

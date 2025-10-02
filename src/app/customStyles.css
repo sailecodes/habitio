@@ -12,12 +12,6 @@ body {
 }
 
 @layer components {
-  .container-dm {
-    @apply mx-auto w-full max-w-7xl p-10;
-  }
-
-  /*  */
-
   .text-title {
     @apply text-5xl font-medium -tracking-[3px];
   }

@@ -1,15 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { THabit, THabitDay } from "@/lib/types";
+import { IHabitContent } from "@/lib/interfaces";
+import { THabitDay } from "@/lib/types";
+import HabitCalendar from "./habit-calendar";
 import HabitProgressBtns from "./habit-progress-btns";
-import PCalendar from "./pcalendar";
 
-interface IHabitContentProps {
-  habit: THabit;
-}
-
-export default function HabitContent({ habit }: IHabitContentProps) {
+export default function HabitContent({ habit }: IHabitContent) {
   const [habitDays, setHabitDays] = useState<THabitDay[]>(habit.habitDays!);
 
   return (
@@ -22,7 +19,7 @@ export default function HabitContent({ habit }: IHabitContentProps) {
         />
       </div>
       <div className="flex-2/3">
-        <PCalendar createdAt={habit.createdAt} habitDays={habitDays} />
+        <HabitCalendar createdAt={habit.createdAt} habitDays={habitDays} />
       </div>
     </div>
   );

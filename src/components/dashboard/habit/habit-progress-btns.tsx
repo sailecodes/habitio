@@ -4,26 +4,20 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { updateDailyProgress } from "@/actions/habits.actions";
 import { HabitProgress } from "@/app/generated/prisma";
-import { THabitDay } from "@/lib/types";
+import { IHabitProgressBtns } from "@/lib/interfaces";
 import { cn, getLocalDay, getNewDate } from "@/lib/utils";
 import { Button } from "../../ui/button";
-
-interface ITodaysHabitProps {
-  habitId: string;
-  habitDays: THabitDay[];
-  setHabitDays: React.Dispatch<React.SetStateAction<THabitDay[]>>;
-}
 
 export default function HabitProgressBtns({
   habitId,
   habitDays,
   setHabitDays,
-}: ITodaysHabitProps) {
+}: IHabitProgressBtns) {
   const [prevDailyProgress, setPrevDailyProgress] =
     useState<HabitProgress | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  function handleDailyProgressUpdate(updatedDailyProgress: HabitProgress) {
+  function handleUpdateDailyProgress(updatedDailyProgress: HabitProgress) {
     const currDate = getNewDate();
     const currDay = getLocalDay(currDate);
     let isNewEntry = false;
@@ -114,7 +108,7 @@ export default function HabitProgressBtns({
             "hover-translate bg-red-500 hover:bg-red-500/80",
             isPending ? "opacity-80" : "",
           )}
-          onClick={() => handleDailyProgressUpdate(HabitProgress.SKIPPED)}
+          onClick={() => handleUpdateDailyProgress(HabitProgress.SKIPPED)}
           disabled={isPending}
         >
           Skipped
@@ -124,7 +118,7 @@ export default function HabitProgressBtns({
             "hover-translate bg-orange-500 hover:bg-orange-500/80",
             isPending ? "opacity-80" : "",
           )}
-          onClick={() => handleDailyProgressUpdate(HabitProgress.IN_PROGRESS)}
+          onClick={() => handleUpdateDailyProgress(HabitProgress.IN_PROGRESS)}
           disabled={isPending}
         >
           In-progress
@@ -134,7 +128,7 @@ export default function HabitProgressBtns({
             "hover-translate bg-green-500 hover:bg-green-500/80",
             isPending ? "opacity-80" : "",
           )}
-          onClick={() => handleDailyProgressUpdate(HabitProgress.COMPLETED)}
+          onClick={() => handleUpdateDailyProgress(HabitProgress.COMPLETED)}
           disabled={isPending}
         >
           Completed

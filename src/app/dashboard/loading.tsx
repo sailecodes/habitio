@@ -26,7 +26,7 @@ export default function Loading() {
             </button>
           </div>
           <ul className="flex items-center gap-5 py-2">
-            {Array.from([1, 2, 3, 4, 5]).map((habit, ind) => (
+            {Array.from([1, 2, 3, 4, 5]).map((ind) => (
               <Skeleton
                 key={`skeleton-habit-card-${ind}`}
                 className="card h-[138px] w-[250px]"

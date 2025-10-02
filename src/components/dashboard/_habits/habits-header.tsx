@@ -25,7 +25,7 @@ export default function HabitsHeader({ setHabits }: IHabitsHeader) {
           </DrawerTrigger>
           <DrawerContent className="pt-5">
             <DrawerHeader className="p-0">
-              <DrawerTitle className="text-subheader container-dm pt-5 pb-0">
+              <DrawerTitle className="text-subheader pt-5 pb-0">
                 Start a new habit
               </DrawerTitle>
             </DrawerHeader>

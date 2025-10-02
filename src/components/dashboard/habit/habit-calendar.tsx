@@ -1,15 +1,12 @@
 import { DayButton } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
-import { THabitDay } from "@/lib/types";
+import { IHabitCalendarProps } from "@/lib/interfaces";
 import { cn } from "@/lib/utils";
 
-export default function PCalendar({
+export default function HabitCalendar({
   createdAt,
   habitDays,
-}: {
-  createdAt: Date;
-  habitDays: THabitDay[];
-}) {
+}: IHabitCalendarProps) {
   return (
     <div>
       <Calendar

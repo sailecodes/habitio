@@ -4,6 +4,7 @@ export default async function Dashboard() {
   return (
     <div>
       <HabitsRoot />
+      {/* Insert other sections */}
     </div>
   );
 }

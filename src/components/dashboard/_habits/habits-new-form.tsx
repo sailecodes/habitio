@@ -4,7 +4,7 @@ import { useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { createNewHabit } from "@/actions/newHabit.actions";
+import { createNewHabit } from "@/actions/habits.actions";
 import {
   Form,
   FormControl,
@@ -28,10 +28,10 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewForm) {
       name: "",
     },
   });
-  const [isPending, startTransition] = useTransition();
   const drawerCloseRef = useRef<HTMLButtonElement>(null);
+  const [isPending, startTransition] = useTransition();
 
-  function onSubmit(values: z.infer<typeof newHabitSchema>) {
+  function handleAddNewHabit(values: z.infer<typeof newHabitSchema>) {
     const optimisticId = Math.random().toString(36).substring(2, 9);
     const optimisticHabit = {
       id: optimisticId,
@@ -69,7 +69,7 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewForm) {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(handleAddNewHabit)}
         className="mx-auto max-w-7xl space-y-8 px-10"
       >
         <FormField
