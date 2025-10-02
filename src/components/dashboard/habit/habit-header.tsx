@@ -8,7 +8,6 @@ export default function HabitHeader({ name, streak }: IHabitHeaderProps) {
         <span className="text-header">
           <span className="text-[38px]">{streak}</span> day streak
         </span>
-        <span className="text-sm">You've done this before, haven't you?</span>
       </div>
     </header>
   );
