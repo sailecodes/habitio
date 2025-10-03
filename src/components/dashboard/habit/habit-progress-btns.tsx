@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { updateDailyProgress } from "@/actions/habits.actions";
 import { HabitProgress } from "@/app/generated/prisma";
-import { IHabitProgressBtns } from "@/lib/interfaces";
+import { IHabitProgressBtnsProps } from "@/lib/interfaces";
 import { cn, getLocalDay, getNewDate } from "@/lib/utils";
 import { Button } from "../../ui/button";
 
@@ -12,15 +12,19 @@ export default function HabitProgressBtns({
   habitId,
   habitDays,
   setHabitDays,
-}: IHabitProgressBtns) {
+  habitStreak,
+  setHabitStreak,
+}: IHabitProgressBtnsProps) {
   const [prevDailyProgress, setPrevDailyProgress] =
     useState<HabitProgress | null>(null);
+  const [prevHabitStreak, setPrevHabitStreak] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
 
   function handleUpdateDailyProgress(updatedDailyProgress: HabitProgress) {
     const currDate = getNewDate();
     const currDay = getLocalDay(currDate);
     let isNewEntry = false;
+    let streakChange = 0;
 
     // Find if an entry exists for today
     const currHd = habitDays.find((hd) => {
@@ -42,6 +46,18 @@ export default function HabitProgressBtns({
             : hd;
         }),
       );
+
+      if (
+        currHd.progress !== HabitProgress.COMPLETED &&
+        updatedDailyProgress === HabitProgress.COMPLETED
+      ) {
+        streakChange = 1;
+      } else if (
+        currHd.progress === HabitProgress.COMPLETED &&
+        updatedDailyProgress !== HabitProgress.COMPLETED
+      ) {
+        streakChange = -1;
+      }
     } else {
       isNewEntry = true;
 
@@ -57,7 +73,14 @@ export default function HabitProgressBtns({
           updatedAt: currDate,
         },
       ]);
+
+      if (updatedDailyProgress === HabitProgress.COMPLETED) {
+        streakChange = 1;
+      }
     }
+
+    setPrevHabitStreak(habitStreak);
+    setHabitStreak((prev) => prev + streakChange);
 
     startTransition(async () => {
       const res = await updateDailyProgress(habitId, updatedDailyProgress);
@@ -84,6 +107,8 @@ export default function HabitProgressBtns({
             });
           }
         });
+
+        setHabitStreak(prevHabitStreak!);
       } else {
         toast.success("Habit status updated successfully.");
 
@@ -101,7 +126,7 @@ export default function HabitProgressBtns({
 
   return (
     <div className="space-y-5">
-      <header className="text-header font-normal">Today&apos;s habit</header>
+      <header className="text-header font-normal">Daily Progress</header>
       <div className="space-x-2">
         <Button
           className={cn(

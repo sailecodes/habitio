@@ -8,10 +8,10 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { IHabitsHeader } from "@/lib/interfaces";
+import { IHabitsHeaderProps } from "@/lib/interfaces";
 import HabitsNewForm from "./habits-new-form";
 
-export default function HabitsHeader({ setHabits }: IHabitsHeader) {
+export default function HabitsHeader({ setHabits }: IHabitsHeaderProps) {
   return (
     <header className="flex items-center justify-between gap-10">
       <div className="flex items-center gap-5">

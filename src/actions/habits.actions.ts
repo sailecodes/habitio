@@ -34,7 +34,7 @@ export async function createNewHabit(
 
 export async function updateDailyProgress(
   habitId: string,
-  progress: HabitProgress,
+  dailyProgress: HabitProgress,
 ): Promise<TServerActionResult> {
   try {
     const habit = await prisma.habit.findFirst({
@@ -56,21 +56,47 @@ export async function updateDailyProgress(
     });
 
     let updatedHabitDay = null;
+    let streakChange = 0;
 
     if (hd) {
       updatedHabitDay = await prisma.habitDay.update({
         where: { id: hd.id },
-        data: { progress },
+        data: {
+          progress: dailyProgress,
+        },
       });
+
+      if (
+        hd.progress !== HabitProgress.COMPLETED &&
+        dailyProgress === HabitProgress.COMPLETED
+      ) {
+        streakChange = 1;
+      } else if (
+        hd.progress === HabitProgress.COMPLETED &&
+        dailyProgress !== HabitProgress.COMPLETED
+      ) {
+        streakChange = -1;
+      }
     } else {
       updatedHabitDay = await prisma.habitDay.create({
         data: {
           date: currDate,
-          progress: progress,
+          progress: dailyProgress,
           habitId,
         },
       });
+
+      if (dailyProgress === HabitProgress.COMPLETED) {
+        streakChange = 1;
+      }
     }
+
+    await prisma.habit.update({
+      where: { id: habitId },
+      data: {
+        streak: habit.streak + streakChange,
+      },
+    });
 
     return { success: true, data: updatedHabitDay };
   } catch (err) {

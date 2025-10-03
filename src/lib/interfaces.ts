@@ -1,45 +1,58 @@
+import { params } from "next/navigation";
+import React from "react";
+import { HabitDay } from "@/app/generated/prisma";
 import { THabit, THabitDay } from "./types";
 
-export interface IHabits {
+export interface IHabitsProps {
   habitsData: THabit[];
 }
 
-export interface IHabitsHeader {
+export interface IHabitsHeaderProps {
   setHabits: React.Dispatch<React.SetStateAction<THabit[]>>;
 }
 
-export interface IHabitsNewForm {
+export interface IHabitsNewFormProps {
   setHabits: React.Dispatch<React.SetStateAction<THabit[]>>;
 }
 
-export interface IHabitsCarousel {
+export interface IHabitsCarouselProps {
   habits: THabit[];
 }
 
-export interface IHabitsCard {
+export interface IHabitsCardProps {
   id: string;
   name: string;
   streak: number;
   startDate: string;
 }
 
-export interface IHabit {
+export interface IHabitProps {
   params: Promise<{ habitName: string; habitId: string }>;
 }
 
-export interface IHabitContent {
+export interface IHabitRootProps {
   habit: THabit;
 }
 
-export interface IHabitHeaderProps {
-  name: string;
-  streak: number;
+export interface IHabitContentProps {
+  habitId: string;
+  habitDays: HabitDay[];
+  createdAt: Date;
+  habitStreak: number;
+  setHabitStreak: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export interface IHabitProgressBtns {
+export interface IHabitHeaderProps {
+  habitName: string;
+  habitStreak: number;
+}
+
+export interface IHabitProgressBtnsProps {
   habitId: string;
   habitDays: THabitDay[];
   setHabitDays: React.Dispatch<React.SetStateAction<THabitDay[]>>;
+  habitStreak: number;
+  setHabitStreak: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface IHabitCalendarProps {

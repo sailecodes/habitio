@@ -1,10 +1,24 @@
-import HabitContent from "@/components/dashboard/habit/habit-content";
-import HabitHeader from "@/components/dashboard/habit/habit-header";
-import { Separator } from "@/components/ui/separator";
-import { IHabit } from "@/lib/interfaces";
+import HabitRoot from "@/components/dashboard/habit/habit-root";
+import { IHabitProps } from "@/lib/interfaces";
 import prisma from "@/lib/prisma/prismaClient";
 
-export default async function Habit({ params }: IHabit) {
+/**
+ * Sentinel page for server-side data fetching
+ *
+ * Pattern: Root Layout
+ * 1. Fetch data in dedicated server component,
+ *    typically the page.tsx file
+ * 2. Pass data to client component as props
+ *
+ * Solves issues regarding optimistic UI updates
+ * with multiple components. Pass data as props
+ * to the highest component in the tree in which
+ * all the children components that need it can
+ * access it.
+ *
+ * Possible optimization is to use React Context.
+ */
+export default async function Habit({ params }: IHabitProps) {
   const { habitId } = await params;
   const dHabitId = decodeURIComponent(habitId);
 
@@ -13,11 +27,5 @@ export default async function Habit({ params }: IHabit) {
     include: { habitDays: true },
   });
 
-  return (
-    <section className="mx-auto w-full max-w-[1410px] p-10">
-      <HabitHeader name={habit!.name} streak={habit!.streak} />
-      <Separator className="my-10 border-2" />
-      <HabitContent habit={habit!} />
-    </section>
-  );
+  return <HabitRoot habit={habit!} />;
 }

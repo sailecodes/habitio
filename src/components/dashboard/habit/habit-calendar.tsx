@@ -1,7 +1,26 @@
-import { DayButton } from "react-day-picker";
+import { CalendarDay, DayButton } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
 import { IHabitCalendarProps } from "@/lib/interfaces";
+import { THabitDay } from "@/lib/types";
 import { cn } from "@/lib/utils";
+
+function isDayButtonInValidRange(day: CalendarDay, start: Date) {
+  const dayTime = day.date.getTime();
+  return (
+    dayTime >= start.setHours(0, 0, 0, 0) &&
+    dayTime <= new Date().setHours(23, 59, 59, 999)
+  );
+}
+
+function getStyle(hd: THabitDay | undefined) {
+  return !hd
+    ? ""
+    : hd.progress === "SKIPPED"
+      ? "bg-red-400 text-white hover-translate"
+      : hd.progress === "IN_PROGRESS"
+        ? "bg-orange-400 text-white hover-translate"
+        : "bg-green-400 text-white hover-translate";
+}
 
 export default function HabitCalendar({
   createdAt,
@@ -11,15 +30,19 @@ export default function HabitCalendar({
     <div>
       <Calendar
         mode="single"
+        className="w-full rounded-md p-0"
+        classNames={{
+          weekday:
+            "text-muted-foreground rounded-md flex-1 font-normal text-xs select-none",
+          caption_label: "text-sm font-medium",
+        }}
+        showOutsideDays={false}
         components={{
           DayButton: ({ day }: React.ComponentProps<typeof DayButton>) => {
             const key = day.date.toISOString().split("T")[0];
             let style;
 
-            if (
-              day.date.getTime() >= createdAt.setHours(0, 0, 0, 0) &&
-              day.date.getTime() <= new Date().setHours(23, 59, 59, 999)
-            ) {
+            if (isDayButtonInValidRange(day, createdAt)) {
               // Every entry in habitDays is guaranteed to be in the correct timezone.
               // Either an entry is added in habit-progress-btns.tsx or habits.actions.ts,
               // both of which account for timezone differences
@@ -27,15 +50,7 @@ export default function HabitCalendar({
                 (hd) => hd.date.toISOString().split("T")[0] === key,
               );
 
-              if (!hd) {
-                style = "";
-              } else if (!hd || hd.progress === "SKIPPED") {
-                style = "bg-red-400 text-white hover-translate";
-              } else if (hd.progress === "COMPLETED") {
-                style = "bg-green-400 text-white hover-translate";
-              } else {
-                style = "bg-orange-400 text-white hover-translate";
-              }
+              style = getStyle(hd);
             }
 
             return (
@@ -49,12 +64,6 @@ export default function HabitCalendar({
               </div>
             );
           },
-        }}
-        className="w-full rounded-md p-0"
-        classNames={{
-          weekday:
-            "text-muted-foreground rounded-md flex-1 font-normal text-xs select-none",
-          caption_label: "text-sm font-medium",
         }}
       />
     </div>

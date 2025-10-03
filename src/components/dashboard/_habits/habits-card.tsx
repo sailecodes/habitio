@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { IHabitsCard } from "@/lib/interfaces";
+import { IHabitsCardProps } from "@/lib/interfaces";
 
 export default function HabitsCard({
   id,
   name,
   streak,
   startDate,
-}: IHabitsCard) {
+}: IHabitsCardProps) {
   return (
     <li>
       <Link

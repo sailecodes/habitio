@@ -1,27 +1,21 @@
 "use client";
 
-import { useRef, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
-import { createNewHabit } from "@/actions/habits.actions";
+import { useRef, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import { createNewHabit } from '@/actions/habits.actions';
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { IHabitsNewForm } from "@/lib/interfaces";
-import { newHabitSchema } from "@/lib/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../../ui/button";
-import { DrawerClose } from "../../ui/drawer";
+  Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { IHabitsNewFormProps } from '@/lib/interfaces';
+import { newHabitSchema } from '@/lib/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '../../ui/button';
+import { DrawerClose } from '../../ui/drawer';
 
-export default function HabitsNewForm({ setHabits }: IHabitsNewForm) {
+export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
   const form = useForm<z.infer<typeof newHabitSchema>>({
     resolver: zodResolver(newHabitSchema),
     defaultValues: {

@@ -1,12 +1,12 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
-import { IHabitsCarousel } from "@/lib/interfaces";
-import { getSimplifiedDate } from "@/lib/utils";
-import HabitsCard from "./habits-card";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
+import { IHabitsCarouselProps } from '@/lib/interfaces';
+import { getSimplifiedDate } from '@/lib/utils';
+import HabitsCard from './habits-card';
 
-export function HabitsCarousel({ habits }: IHabitsCarousel) {
+export function HabitsCarousel({ habits }: IHabitsCarouselProps) {
   const [currInd, setCurrInd] = useState<number>(0);
 
   function moveCarouselLeft() {

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { IHabits } from "@/lib/interfaces";
+import { IHabitsProps } from "@/lib/interfaces";
 import { THabit } from "@/lib/types";
 import { HabitsCarousel } from "./habits-carousel";
 import HabitsHeader from "./habits-header";
 
-export default function Habits({ habitsData }: IHabits) {
+export default function Habits({ habitsData }: IHabitsProps) {
   const [habits, setHabits] = useState<THabit[]>(habitsData);
 
   return (

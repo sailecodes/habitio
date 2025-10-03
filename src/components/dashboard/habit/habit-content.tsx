@@ -1,25 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { IHabitContent } from "@/lib/interfaces";
+import { IHabitContentProps } from "@/lib/interfaces";
 import { THabitDay } from "@/lib/types";
 import HabitCalendar from "./habit-calendar";
 import HabitProgressBtns from "./habit-progress-btns";
 
-export default function HabitContent({ habit }: IHabitContent) {
-  const [habitDays, setHabitDays] = useState<THabitDay[]>(habit.habitDays!);
+export default function HabitContent({
+  habitId,
+  habitDays: hds,
+  createdAt,
+  habitStreak,
+  setHabitStreak,
+}: IHabitContentProps) {
+  const [habitDays, setHabitDays] = useState<THabitDay[]>(hds);
 
   return (
     <div className="flex gap-20">
       <div className="flex-1/3 space-y-10">
         <HabitProgressBtns
-          habitId={habit.id}
+          habitId={habitId}
           habitDays={habitDays}
           setHabitDays={setHabitDays}
+          habitStreak={habitStreak}
+          setHabitStreak={setHabitStreak}
         />
       </div>
       <div className="flex-2/3">
-        <HabitCalendar createdAt={habit.createdAt} habitDays={habitDays} />
+        <HabitCalendar createdAt={createdAt} habitDays={habitDays} />
       </div>
     </div>
   );
