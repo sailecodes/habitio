@@ -1,43 +1,46 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { register } from "@/actions/auth";
+import { signIn } from "@/actions/auth";
 import { FieldControllerInput } from "@/components/auth/field-controller-input";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Separator } from "@/components/ui/separator";
-import { registerSchema } from "@/lib/schemas";
+import { signInSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export default function Register() {
-  const registerForm = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+export default function SignIn() {
+  const signInForm = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
-      username: "",
     },
   });
-  const [isRegistering, setIsRegistering] = useState<boolean>(false);
+  const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
+  const router = useRouter();
 
-  async function handleRegister(data: z.infer<typeof registerSchema>) {
-    setIsRegistering(true);
+  async function handleSignIn(data: z.infer<typeof signInSchema>) {
+    setIsSigningIn(true);
 
-    const res = await register(data);
+    const res = await signIn(data);
 
     if (res.success) {
-      registerForm.reset();
-      toast.info(`✉️ Sent email verification`, {
-        description: "Please check your email for the confirmation link.",
-      });
+      router.push("/dashboard");
     } else if (!res.success) {
       console.error(res.error);
 
-      if (res.isPublic) {
+      if (res.error.includes("confirmed")) {
+        toast.info("Email isn't verified", {
+          description: "Please check your email for the verification link.",
+          icon: <span>❌</span>,
+        });
+      } else if (res.isPublic) {
         toast.error("❌ Uh oh. Something went wrong", { description: res.error });
       } else {
         toast.error("❌ Uh oh. Something went wrong", {
@@ -46,7 +49,7 @@ export default function Register() {
       }
     }
 
-    setIsRegistering(false);
+    setIsSigningIn(false);
   }
 
   return (
@@ -61,48 +64,40 @@ export default function Register() {
         </header>
         <form
           id="register-form"
-          onSubmit={registerForm.handleSubmit(handleRegister)}
+          onSubmit={signInForm.handleSubmit(handleSignIn)}
           className="space-y-10">
           <FieldGroup>
             <FieldControllerInput
               name="email"
-              control={registerForm.control}
+              control={signInForm.control}
               label="Email"
               type="email"
             />
             <FieldControllerInput
               name="password"
-              control={registerForm.control}
+              control={signInForm.control}
               label="Password"
               type="password"
-              description="Must be a 6-character password. Make it hard to guess!"
-            />
-            <FieldControllerInput
-              name="username"
-              control={registerForm.control}
-              label="Username"
-              type="text"
-              description="A unique name that defines you."
             />
           </FieldGroup>
           <Button
             type="submit"
             variant="outline"
-            disabled={isRegistering}
+            disabled={isSigningIn}
             className="bg-indigo-400 hover:bg-indigo-400/80 w-full text-white hover:text-white hover-translate">
-            Start creating habits
+            Start your habits
           </Button>
-          <Separator />
-          <span className="block text-sm text-center">
-            Already registered? Sign in{" "}
-            <Link
-              href="/"
-              className="text-blue-500 underline underline-offset-2">
-              here
-            </Link>
-            .
-          </span>
         </form>
+        <Separator />
+        <span className="block text-sm text-center">
+          Not registered? Sign up{" "}
+          <Link
+            href="/register"
+            className="text-blue-500 underline underline-offset-2">
+            here
+          </Link>
+          .
+        </span>
       </div>
     </main>
   );

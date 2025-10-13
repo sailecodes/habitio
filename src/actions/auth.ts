@@ -2,15 +2,14 @@
 
 import z from "zod";
 import prisma from "@/lib/prisma";
-import { registerSchema } from "@/lib/schemas";
+import { registerSchema, signInSchema } from "@/lib/schemas";
 import { createClient } from "@/lib/supabase/server";
 import { TServerActionError, TServerActionSuccess } from "@/lib/types";
 
 export async function register(
   data: z.infer<typeof registerSchema>
 ): Promise<TServerActionSuccess | TServerActionError> {
-  const supabase = await createClient();
-
+  let supabase = null;
   let rbSbUser = null;
   let rbPUser = null;
 
@@ -29,16 +28,20 @@ export async function register(
       return { success: false, error: "Email or username is already taken.", isPublic: true };
     }
 
-    const { data: sbUser, error: sbError } = await supabase.auth.signUp({
-      email: parsedData.email,
-      password: parsedData.password,
-      options: { emailRedirectTo: `${process.env.LOCAL_URL}/sign-in` },
+    supabase = await createClient();
+
+    const {
+      data: { user: sbUser },
+      error: signUpError,
+    } = await supabase.auth.signUp({
+      ...parsedData,
+      options: { emailRedirectTo: `${process.env.LOCAL_URL}` },
     });
 
     if (!sbUser) {
-      return { success: false, error: "Something went wrong. Please try again!", isPublic: true };
-    } else if (sbError) {
-      return { success: false, error: sbError.message, isPublic: false };
+      return { success: false, error: "Something went wrong.", isPublic: false };
+    } else if (signUpError) {
+      return { success: false, error: signUpError.message, isPublic: false };
     }
 
     rbSbUser = sbUser;
@@ -53,6 +56,49 @@ export async function register(
   } catch (err) {
     // TODO: Rollback
 
-    return { success: false, error: "Something went wrong. Please try again!", isPublic: true };
+    return { success: false, error: "Something went wrong.", isPublic: false };
+  }
+}
+
+export async function signIn(
+  data: z.infer<typeof signInSchema>
+): Promise<TServerActionSuccess | TServerActionError> {
+  let supabase = null;
+
+  try {
+    const { data: parsedData, error: parseError } = signInSchema.safeParse(data);
+
+    if (parseError) {
+      return { success: false, error: parseError.message, isPublic: false };
+    }
+
+    supabase = await createClient();
+
+    const { data: sbUser, error: signInError } = await supabase.auth.signInWithPassword({
+      ...parsedData,
+    });
+
+    if (!sbUser) {
+      return { success: false, error: "Something went wrong.", isPublic: false };
+    } else if (signInError) {
+      return { success: false, error: signInError.message, isPublic: false };
+    }
+
+    return { success: true, data: null };
+  } catch (err) {
+    return { success: false, error: "Something went wrong.", isPublic: false };
+  }
+}
+
+export async function signOut(): Promise<TServerActionSuccess | TServerActionError> {
+  let supabase = null;
+
+  try {
+    supabase = await createClient();
+    await supabase.auth.signOut();
+
+    return { success: true, data: null };
+  } catch (err) {
+    return { success: false, error: "Something went wrong.", isPublic: false };
   }
 }
