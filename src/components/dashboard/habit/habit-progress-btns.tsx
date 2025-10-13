@@ -34,6 +34,10 @@ export default function HabitProgressBtns({
     });
 
     if (currHd) {
+      if (currHd.progress === updatedDailyProgress) {
+        return;
+      }
+
       setPrevDailyProgress(currHd.progress);
 
       // Optimistically update existing entry

@@ -15,12 +15,10 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  email     String  @unique
-  username  String  @unique
-  firstName String
-  lastName  String
-  habits    Habit[]
+  id       String  @id @default(uuid())
+  email    String  @unique
+  username String  @unique
+  habits   Habit[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

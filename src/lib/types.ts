@@ -1,5 +1,16 @@
 import { HabitProgress } from "@/app/generated/prisma";
 
+export type TServerActionSuccess = {
+  success: true;
+  data: any | null;
+};
+
+export type TServerActionError = {
+  success: false;
+  error: string;
+  isPublic: boolean;
+};
+
 export type TServerActionResult = {
   success: boolean;
   error?: string;

@@ -2,7 +2,7 @@
 
 import z from "zod";
 import { HabitProgress } from "@/app/generated/prisma";
-import prisma from "@/lib/prisma/prismaClient";
+import prisma from "@/lib/prisma";
 import { newHabitSchema } from "@/lib/schemas";
 import { TServerActionResult } from "@/lib/types";
 import { getLocalDay, getNewDate } from "@/lib/utils";

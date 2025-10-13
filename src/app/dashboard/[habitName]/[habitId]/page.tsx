@@ -1,6 +1,6 @@
 import HabitRoot from "@/components/dashboard/habit/habit-root";
 import { IHabitProps } from "@/lib/interfaces";
-import prisma from "@/lib/prisma/prismaClient";
+import prisma from "@/lib/prisma";
 
 /**
  * Sentinel page for server-side data fetching

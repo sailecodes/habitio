@@ -1,7 +1,20 @@
-import { params } from "next/navigation";
-import React from "react";
 import { HabitDay } from "@/app/generated/prisma";
 import { THabit, THabitDay } from "./types";
+
+// ==================================================================
+// AUTH =============================================================
+
+export interface IFieldControllerInputProps {
+  name: string;
+  control: any;
+  label: string;
+  placeholder?: string;
+  description?: string;
+  type: string;
+}
+
+// ==================================================================
+//  =============================================================
 
 export interface IHabitsProps {
   habitsData: THabit[];
