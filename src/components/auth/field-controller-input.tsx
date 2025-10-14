@@ -9,6 +9,8 @@ export function FieldControllerInput({
   label,
   placeholder,
   description,
+  hasCustomErrors,
+  customErrors,
   type,
 }: IFieldControllerInputProps) {
   return (
@@ -28,6 +30,7 @@ export function FieldControllerInput({
           />
           {description && <FieldDescription>{description}</FieldDescription>}
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          {hasCustomErrors && <FieldError errors={customErrors} />}
         </Field>
       )}
     />

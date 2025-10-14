@@ -17,7 +17,10 @@ export async function register(
     const { data: parsedData, error: parseError } = registerSchema.safeParse(data);
 
     if (parseError) {
-      return { success: false, error: parseError.message, isPublic: false };
+      return {
+        success: false,
+        error: `[REGISTER ERROR] ${parseError.message}`,
+      };
     }
 
     const isUserUnique = await prisma.user.findFirst({
@@ -25,23 +28,32 @@ export async function register(
     });
 
     if (isUserUnique) {
-      return { success: false, error: "Email or username is already taken.", isPublic: true };
+      return {
+        success: false,
+        error: "Email or username is already taken.",
+      };
     }
 
     supabase = await createClient();
 
     const {
       data: { user: sbUser },
-      error: signUpError,
+      error: registerError,
     } = await supabase.auth.signUp({
       ...parsedData,
       options: { emailRedirectTo: `${process.env.LOCAL_URL}` },
     });
 
     if (!sbUser) {
-      return { success: false, error: "Something went wrong.", isPublic: false };
-    } else if (signUpError) {
-      return { success: false, error: signUpError.message, isPublic: false };
+      return {
+        success: false,
+        error: "[REGISTER ERROR] Supabase user does not exist",
+      };
+    } else if (registerError) {
+      return {
+        success: false,
+        error: `[REGISTER ERROR] ${registerError.message}`,
+      };
     }
 
     rbSbUser = sbUser;
@@ -56,7 +68,10 @@ export async function register(
   } catch (err) {
     // TODO: Rollback
 
-    return { success: false, error: "Something went wrong.", isPublic: false };
+    return {
+      success: false,
+      error: "[REGISTER ERROR] Something went wrong",
+    };
   }
 }
 
@@ -69,7 +84,7 @@ export async function signIn(
     const { data: parsedData, error: parseError } = signInSchema.safeParse(data);
 
     if (parseError) {
-      return { success: false, error: parseError.message, isPublic: false };
+      return { success: false, error: `[SIGN IN ERROR] ${parseError.message}` };
     }
 
     supabase = await createClient();
@@ -79,14 +94,14 @@ export async function signIn(
     });
 
     if (!sbUser) {
-      return { success: false, error: "Something went wrong.", isPublic: false };
+      return { success: false, error: "[SIGN IN ERROR] Supabase user does not exist" };
     } else if (signInError) {
-      return { success: false, error: signInError.message, isPublic: false };
+      return { success: false, error: `[SIGN IN ERROR] ${signInError.message}` };
     }
 
     return { success: true, data: null };
   } catch (err) {
-    return { success: false, error: "Something went wrong.", isPublic: false };
+    return { success: false, error: "[SIGN IN ERROR] Something went wrong" };
   }
 }
 
@@ -99,6 +114,6 @@ export async function signOut(): Promise<TServerActionSuccess | TServerActionErr
 
     return { success: true, data: null };
   } catch (err) {
-    return { success: false, error: "Something went wrong.", isPublic: false };
+    return { success: false, error: "[SIGN OUT ERROR] Something went wrong" };
   }
 }

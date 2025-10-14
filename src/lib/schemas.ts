@@ -8,7 +8,7 @@ export const registerSchema = z.object({
 
 export const signInSchema = z.object({
   email: z.email("Please provide an email"),
-  password: z.string().min(6, "Password must be 6 characters"),
+  password: z.string().min(1, "Please provide a password"),
 });
 
 export const newHabitSchema = z.object({

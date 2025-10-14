@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { updateDailyProgress } from "@/actions/habits.actions";
+import { updateDailyProgress } from "@/actions/habits";
 import { HabitProgress } from "@/app/generated/prisma";
 import { IHabitProgressBtnsProps } from "@/lib/interfaces";
 import { cn, getLocalDay, getNewDate } from "@/lib/utils";
@@ -15,8 +15,7 @@ export default function HabitProgressBtns({
   habitStreak,
   setHabitStreak,
 }: IHabitProgressBtnsProps) {
-  const [prevDailyProgress, setPrevDailyProgress] =
-    useState<HabitProgress | null>(null);
+  const [prevDailyProgress, setPrevDailyProgress] = useState<HabitProgress | null>(null);
   const [prevHabitStreak, setPrevHabitStreak] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -45,10 +44,8 @@ export default function HabitProgressBtns({
         prev.map((hd) => {
           const hdDate = getNewDate(hd.date);
 
-          return getLocalDay(hdDate) === currDay
-            ? { ...hd, progress: updatedDailyProgress }
-            : hd;
-        }),
+          return getLocalDay(hdDate) === currDay ? { ...hd, progress: updatedDailyProgress } : hd;
+        })
       );
 
       if (
@@ -105,9 +102,7 @@ export default function HabitProgressBtns({
             return prev.map((hd) => {
               const hdDate = getNewDate(hd.date);
 
-              return getLocalDay(hdDate) === currDay
-                ? { ...hd, progress: prevDailyProgress! }
-                : hd;
+              return getLocalDay(hdDate) === currDay ? { ...hd, progress: prevDailyProgress! } : hd;
             });
           }
         });
@@ -122,7 +117,7 @@ export default function HabitProgressBtns({
             const hdDate = getNewDate(hd.date);
 
             return getLocalDay(hdDate) === currDay ? res.data : hd;
-          }),
+          })
         );
       }
     });
@@ -130,36 +125,33 @@ export default function HabitProgressBtns({
 
   return (
     <div className="space-y-5">
-      <header className="text-header font-normal">Daily Progress</header>
+      <header className="font-normal text-header">Daily Progress</header>
       <div className="space-x-2">
         <Button
           className={cn(
-            "hover-translate bg-red-500 hover:bg-red-500/80",
-            isPending ? "opacity-80" : "",
+            "bg-red-500 hover:bg-red-500/80 hover-translate",
+            isPending ? "opacity-80" : ""
           )}
           onClick={() => handleUpdateDailyProgress(HabitProgress.SKIPPED)}
-          disabled={isPending}
-        >
+          disabled={isPending}>
           Skipped
         </Button>
         <Button
           className={cn(
-            "hover-translate bg-orange-500 hover:bg-orange-500/80",
-            isPending ? "opacity-80" : "",
+            "bg-orange-500 hover:bg-orange-500/80 hover-translate",
+            isPending ? "opacity-80" : ""
           )}
           onClick={() => handleUpdateDailyProgress(HabitProgress.IN_PROGRESS)}
-          disabled={isPending}
-        >
+          disabled={isPending}>
           In-progress
         </Button>
         <Button
           className={cn(
-            "hover-translate bg-green-500 hover:bg-green-500/80",
-            isPending ? "opacity-80" : "",
+            "bg-green-500 hover:bg-green-500/80 hover-translate",
+            isPending ? "opacity-80" : ""
           )}
           onClick={() => handleUpdateDailyProgress(HabitProgress.COMPLETED)}
-          disabled={isPending}
-        >
+          disabled={isPending}>
           Completed
         </Button>
       </div>

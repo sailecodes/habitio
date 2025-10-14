@@ -8,7 +8,6 @@ export type TServerActionSuccess = {
 export type TServerActionError = {
   success: false;
   error: string;
-  isPublic: boolean;
 };
 
 export type TServerActionResult = {

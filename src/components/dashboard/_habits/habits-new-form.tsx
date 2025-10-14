@@ -1,19 +1,25 @@
 "use client";
 
-import { useRef, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
-import { createNewHabit } from '@/actions/habits.actions';
+import { useRef, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import { createNewHabit } from "@/actions/habits";
 import {
-  Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { IHabitsNewFormProps } from '@/lib/interfaces';
-import { newHabitSchema } from '@/lib/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '../../ui/button';
-import { DrawerClose } from '../../ui/drawer';
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { IHabitsNewFormProps } from "@/lib/interfaces";
+import { newHabitSchema } from "@/lib/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "../../ui/button";
+import { DrawerClose } from "../../ui/drawer";
 
 export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
   const form = useForm<z.infer<typeof newHabitSchema>>({
@@ -53,9 +59,7 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
         toast.success("Habit created successfully!");
 
         // Replace optimistic habit with real data
-        setHabits((prev) =>
-          prev.map((habit) => (habit.id === optimisticId ? res.data : habit)),
-        );
+        setHabits((prev) => prev.map((habit) => (habit.id === optimisticId ? res.data : habit)));
       }
     });
   }
@@ -64,8 +68,7 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleAddNewHabit)}
-        className="mx-auto max-w-7xl space-y-8 px-10"
-      >
+        className="space-y-8 mx-auto px-10 max-w-7xl">
         <FormField
           control={form.control}
           name="name"
@@ -73,31 +76,32 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
             <FormItem>
               <FormLabel>Habit</FormLabel>
               <FormControl>
-                <Input placeholder="Walk my cat" {...field} />
+                <Input
+                  placeholder="Walk my cat"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>
-                Name your habit to something you will remember.
-              </FormDescription>
+              <FormDescription>Name your habit to something you will remember.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="flex items-center justify-between gap-5">
-          <DrawerClose className="flex-1/2" asChild>
+        <div className="flex justify-between items-center gap-5">
+          <DrawerClose
+            className="flex-1/2"
+            asChild>
             <Button
-              className="hover-translate w-full"
+              className="w-full hover-translate"
               variant="outline"
               ref={drawerCloseRef}
-              disabled={isPending}
-            >
+              disabled={isPending}>
               Cancel
             </Button>
           </DrawerClose>
           <Button
             type="submit"
-            className="hover-translate flex-1/2"
-            disabled={isPending}
-          >
+            className="flex-1/2 hover-translate"
+            disabled={isPending}>
             Submit
           </Button>
         </div>

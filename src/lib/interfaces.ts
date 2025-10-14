@@ -4,12 +4,19 @@ import { THabit, THabitDay } from "./types";
 // ==================================================================
 // AUTH =============================================================
 
+export interface IEmailVerificationAlertProps {
+  isDialogOpen: boolean;
+  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export interface IFieldControllerInputProps {
   name: string;
   control: any;
   label: string;
-  placeholder?: string;
-  description?: string;
+  placeholder?: string | undefined;
+  description?: string | undefined;
+  hasCustomErrors?: boolean | undefined;
+  customErrors?: { message: string }[];
   type: string;
 }
 

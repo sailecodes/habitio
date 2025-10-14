@@ -10,7 +10,7 @@ export default function Habits({ habitsData }: IHabitsProps) {
   const [habits, setHabits] = useState<THabit[]>(habitsData);
 
   return (
-    <section className="relative mx-auto w-[1410px] space-y-5 p-10">
+    <section className="relative space-y-5 mx-auto p-10 w-[1410px]">
       <HabitsHeader setHabits={setHabits} />
       <HabitsCarousel habits={habits} />
     </section>

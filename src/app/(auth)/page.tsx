@@ -36,15 +36,19 @@ export default function SignIn() {
       console.error(res.error);
 
       if (res.error.includes("confirmed")) {
-        toast.info("Email isn't verified", {
+        toast.error("Email isn't verified.", {
           description: "Please check your email for the verification link.",
-          icon: <span>❌</span>,
+          icon: <span>🤔</span>,
         });
-      } else if (res.isPublic) {
-        toast.error("❌ Uh oh. Something went wrong", { description: res.error });
+      } else if (res.error.includes("credentials")) {
+        toast.error("Well, something isn't right.", {
+          description: "Please double-check your email and password.",
+          icon: <span>💀</span>,
+        });
       } else {
-        toast.error("❌ Uh oh. Something went wrong", {
-          description: "Please try again or refresh the page!",
+        toast.error("Uh oh. Something went wrong!", {
+          description: "Please try again or refresh the page.",
+          icon: <span>😯</span>,
         });
       }
     }
@@ -54,7 +58,7 @@ export default function SignIn() {
 
   return (
     <main className="flex justify-center items-center mx-auto p-10 max-w-2xl h-dvh">
-      <div className="space-y-10 shadow-md p-10 py-18 border-1 rounded-lg w-full shrink-0">
+      <div className="space-y-10 shadow-md sm:p-10 px-5 py-15 sm:py-18 border-1 rounded-lg w-full shrink-0">
         <header className="text-center">
           <span className="block text-title">
             Ha
