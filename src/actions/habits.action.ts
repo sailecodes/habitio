@@ -4,38 +4,37 @@ import z from "zod";
 import { HabitProgress } from "@/app/generated/prisma";
 import prisma from "@/lib/prisma";
 import { newHabitSchema } from "@/lib/schemas";
-import { TServerActionResult } from "@/lib/types";
+import { TServerActionError, TServerActionSuccess } from "@/lib/types";
 import { getLocalDay, getNewDate } from "@/lib/utils";
 
 export async function createNewHabit(
   data: z.infer<typeof newHabitSchema>,
-): Promise<TServerActionResult> {
+  userId: string
+): Promise<TServerActionSuccess | TServerActionError> {
   try {
-    const { data: parsedData, error: parseError } =
-      newHabitSchema.safeParse(data);
+    const { data: parsedData, error: parseError } = newHabitSchema.safeParse(data);
 
     if (parseError) {
-      return { success: false, error: `[ERR] ${parseError}` };
+      return { success: false, error: `[CREATE NEW HABIT ERROR] ${parseError}` };
     }
 
-    // TODO: Replace with actual user ID
     const newHabit = await prisma.habit.create({
       data: {
-        userId: "537027d9-698c-4c2a-88e7-1504130865f7",
         ...parsedData,
+        userId,
       },
     });
 
     return { success: true, data: newHabit };
-  } catch (e) {
-    return { success: false, error: `[ERR] ${e}` };
+  } catch (err) {
+    return { success: false, error: `[CREATE NEW HABIT ERROR] ${err}` };
   }
 }
 
 export async function updateDailyProgress(
   habitId: string,
-  dailyProgress: HabitProgress,
-): Promise<TServerActionResult> {
+  dailyProgress: HabitProgress
+): Promise<TServerActionSuccess | TServerActionError> {
   try {
     const habit = await prisma.habit.findFirst({
       where: { id: habitId },
@@ -43,7 +42,7 @@ export async function updateDailyProgress(
     });
 
     if (!habit) {
-      return { success: false, error: "[ERR] Habit not found" };
+      return { success: false, error: "[UPDATE DAILY PROGRESS ERROR] Habit does not exist" };
     }
 
     const currDate = getNewDate();
@@ -66,10 +65,7 @@ export async function updateDailyProgress(
         },
       });
 
-      if (
-        hd.progress !== HabitProgress.COMPLETED &&
-        dailyProgress === HabitProgress.COMPLETED
-      ) {
+      if (hd.progress !== HabitProgress.COMPLETED && dailyProgress === HabitProgress.COMPLETED) {
         streakChange = 1;
       } else if (
         hd.progress === HabitProgress.COMPLETED &&
@@ -100,6 +96,6 @@ export async function updateDailyProgress(
 
     return { success: true, data: updatedHabitDay };
   } catch (err) {
-    return { success: false, error: `[ERR] ${err}` };
+    return { success: false, error: `[UPDATE DAILY PROGRESS ERROR] Something went wrong. ${err}` };
   }
 }

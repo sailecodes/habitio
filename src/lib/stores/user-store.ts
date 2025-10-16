@@ -1,13 +1,38 @@
-import { create } from "zustand";
+import { createStore } from "zustand";
+import { TUser } from "../types";
 
-import type { User } from "@supabase/supabase-js";
+export type TUserState = {
+  user: TUser | null;
+};
 
-interface UserStore {
-  user: User | null;
-  initUser: (user: User | null) => void;
-}
+export type TUserActions = {
+  signOut: () => void;
+};
 
-export const useUserStore = create<UserStore>((set) => ({
+export type TUserStore = TUserState & TUserActions;
+
+export const defaultUserInitState = {
   user: null,
-  initUser: (user) => set(() => ({ user })),
-}));
+};
+
+export const createUserStore = (initState: TUserState = defaultUserInitState) => {
+  return createStore<TUserStore>()((set) => ({
+    ...initState,
+    signOut: () => set({ user: null }),
+  }));
+};
+
+// interface UserStore {
+//   user: TUser | null;
+//   initUser: (user: TUser | null) => void;
+// }
+
+// export const useUserStore = create<UserStore>()(
+//   persist(
+//     (set) => ({
+//       user: null,
+//       initUser: (user) => set(() => ({ user })),
+//     }),
+//     { name: "user-storage" }
+//   )
+// );

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { updateDailyProgress } from "@/actions/habits";
+import { updateDailyProgress } from "@/actions/habits.action";
 import { HabitProgress } from "@/app/generated/prisma";
 import { IHabitProgressBtnsProps } from "@/lib/interfaces";
 import { cn, getLocalDay, getNewDate } from "@/lib/utils";
@@ -109,7 +109,10 @@ export default function HabitProgressBtns({
 
         setHabitStreak(prevHabitStreak!);
       } else {
-        toast.success("Habit status updated successfully.");
+        toast.success("Status updated successfully!", {
+          description: "View the calendar to see your progress in colors.",
+          icon: <span>😀</span>,
+        });
 
         // Replace optimistic update with real data
         setHabitDays((prev) =>
@@ -129,7 +132,7 @@ export default function HabitProgressBtns({
       <div className="space-x-2">
         <Button
           className={cn(
-            "bg-red-500 hover:bg-red-500/80 hover-translate",
+            "bg-red-500 hover:bg-red-500/80 hover-translate hover-pointer",
             isPending ? "opacity-80" : ""
           )}
           onClick={() => handleUpdateDailyProgress(HabitProgress.SKIPPED)}
@@ -138,7 +141,7 @@ export default function HabitProgressBtns({
         </Button>
         <Button
           className={cn(
-            "bg-orange-500 hover:bg-orange-500/80 hover-translate",
+            "bg-orange-500 hover:bg-orange-500/80 hover-translate hover-pointer",
             isPending ? "opacity-80" : ""
           )}
           onClick={() => handleUpdateDailyProgress(HabitProgress.IN_PROGRESS)}
@@ -147,7 +150,7 @@ export default function HabitProgressBtns({
         </Button>
         <Button
           className={cn(
-            "bg-green-500 hover:bg-green-500/80 hover-translate",
+            "bg-green-500 hover:bg-green-500/80 hover-translate hover-pointer",
             isPending ? "opacity-80" : ""
           )}
           onClick={() => handleUpdateDailyProgress(HabitProgress.COMPLETED)}

@@ -1,8 +1,8 @@
 import { HabitDay } from "@/app/generated/prisma";
 import { THabit, THabitDay } from "./types";
 
-// ==================================================================
-// AUTH =============================================================
+// ============================================================================
+// AUTH
 
 export interface IEmailVerificationAlertProps {
   isDialogOpen: boolean;
@@ -20,14 +20,14 @@ export interface IFieldControllerInputProps {
   type: string;
 }
 
-// ==================================================================
-//  =============================================================
-
-export interface IHabitsProps {
-  habitsData: THabit[];
-}
+// ============================================================================
+// HABITS
 
 export interface IHabitsHeaderProps {
+  setHabits: React.Dispatch<React.SetStateAction<THabit[]>>;
+}
+
+export interface IHabitsDrawerProps {
   setHabits: React.Dispatch<React.SetStateAction<THabit[]>>;
 }
 
@@ -46,12 +46,20 @@ export interface IHabitsCardProps {
   startDate: string;
 }
 
-export interface IHabitProps {
+// ============================================================================
+// HABIT
+
+export interface IHabitRootProps {
   params: Promise<{ habitName: string; habitId: string }>;
 }
 
-export interface IHabitRootProps {
+export interface IHabitProps {
   habit: THabit;
+}
+
+export interface IHabitHeaderProps {
+  habitName: string;
+  habitStreak: number;
 }
 
 export interface IHabitContentProps {
@@ -60,11 +68,6 @@ export interface IHabitContentProps {
   createdAt: Date;
   habitStreak: number;
   setHabitStreak: React.Dispatch<React.SetStateAction<number>>;
-}
-
-export interface IHabitHeaderProps {
-  habitName: string;
-  habitStreak: number;
 }
 
 export interface IHabitProgressBtnsProps {

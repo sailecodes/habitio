@@ -6,11 +6,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { signIn } from "@/actions/auth";
+import { signIn } from "@/actions/auth.action";
 import { FieldControllerInput } from "@/components/auth/field-controller-input";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
 import { signInSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -89,7 +90,7 @@ export default function SignIn() {
             variant="outline"
             disabled={isSigningIn}
             className="bg-indigo-400 hover:bg-indigo-400/80 w-full text-white hover:text-white hover-translate">
-            Start your habits
+            {isSigningIn ? <Spinner /> : "Start your habits"}
           </Button>
         </form>
         <Separator />

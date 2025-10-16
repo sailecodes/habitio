@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
-import { IHabitsCarouselProps } from '@/lib/interfaces';
-import { getSimplifiedDate } from '@/lib/utils';
-import HabitsCard from './habits-card';
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { IHabitsCarouselProps } from "@/lib/interfaces";
+import { getSimplifiedDate } from "@/lib/utils";
+import HabitsCard from "./habits-card";
 
 export function HabitsCarousel({ habits }: IHabitsCarouselProps) {
   const [currInd, setCurrInd] = useState<number>(0);
@@ -27,8 +27,8 @@ export function HabitsCarousel({ habits }: IHabitsCarouselProps) {
 
   if (habits.length === 0) {
     return (
-      <div className="text-subheader grid h-[154px] w-full place-items-center py-2">
-        Create a new habit!
+      <div className="place-items-center grid py-2 w-full h-[154px] text-subheader">
+        Create a habit!
       </div>
     );
   }
@@ -36,15 +36,16 @@ export function HabitsCarousel({ habits }: IHabitsCarouselProps) {
   return (
     <div className="w-[1330px] overflow-x-hidden">
       <div className="flex items-center gap-5">
-        <button onClick={moveCarouselLeft} disabled={currInd === 0}>
+        <button
+          onClick={moveCarouselLeft}
+          disabled={currInd === 0}>
           <ArrowLeft
             className={`icon absolute top-[48px] right-[80px] ${currInd === 0 ? "pointer-events-none opacity-50" : "hover-translate opacity-100"}`}
           />
         </button>
         <button
           onClick={moveCarouselRight}
-          disabled={currInd === Math.ceil(habits.length / 5) - 1}
-        >
+          disabled={currInd === Math.ceil(habits.length / 5) - 1}>
           <ArrowRight
             className={`icon absolute top-[48px] right-[40px] ${currInd === Math.ceil(habits.length / 5) - 1 ? "pointer-events-none opacity-50" : "hover-translate opacity-100"}`}
           />
@@ -52,8 +53,7 @@ export function HabitsCarousel({ habits }: IHabitsCarouselProps) {
       </div>
       <ul
         className={`flex items-center gap-5 py-2 transition-transform duration-550`}
-        style={{ transform: `translateX(-${101.5 * currInd}%)` }}
-      >
+        style={{ transform: `translateX(-${101.5 * currInd}%)` }}>
         {/* TODO:
           - Add a sorter
           - Add a search bar  */}

@@ -1,42 +1,32 @@
-import { toast } from "sonner";
 import Footer from "@/components/dashboard/footer";
-import InitStores from "@/components/dashboard/init-stores";
 import Nav from "@/components/dashboard/nav";
 import prisma from "@/lib/prisma";
+import { UserStoreProvider } from "@/lib/providers/user-provider";
 import { createClient } from "@/lib/supabase/server";
-import { THabit } from "@/lib/types";
 
 export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let user = null;
-  let habits: THabit[] = [];
+  const supabase = await createClient();
+  const spUser = (await supabase.auth.getUser()).data.user;
 
-  try {
-    const supabase = await createClient();
-    user = (await supabase.auth.getUser()).data.user;
-
-    habits = await prisma.habit.findMany({
-      where: { userId: user?.id ?? undefined },
-      orderBy: { createdAt: "desc" },
-    });
-  } catch (err) {
-    console.error(`[DASHBOARD LAYOUT ERROR] ${err}`);
-
-    // TODO: Sign user out
-  }
+  const user = spUser
+    ? await prisma.user.findFirst({
+        where: {
+          email: spUser.email,
+        },
+      })
+    : null;
 
   return (
     <main className="flex flex-col h-dvh">
-      <InitStores
-        user={user}
-        habits={habits}>
+      <UserStoreProvider initialState={{ user }}>
         <Nav />
         {children}
         <Footer />
-      </InitStores>
+      </UserStoreProvider>
     </main>
   );
 }

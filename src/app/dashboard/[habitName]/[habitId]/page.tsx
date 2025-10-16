@@ -1,5 +1,5 @@
-import HabitRoot from "@/components/dashboard/habit/habit-root";
-import { IHabitProps } from "@/lib/interfaces";
+import Habit from "@/components/dashboard/habit/habit";
+import { IHabitRootProps } from "@/lib/interfaces";
 import prisma from "@/lib/prisma";
 
 /**
@@ -16,9 +16,10 @@ import prisma from "@/lib/prisma";
  * all the children components that need it can
  * access it.
  *
- * Possible optimization is to use React Context.
+ * Possible optimization is to use React Context
+ * or state management.
  */
-export default async function Habit({ params }: IHabitProps) {
+export default async function HabitRoot({ params }: IHabitRootProps) {
   const { habitId } = await params;
   const dHabitId = decodeURIComponent(habitId);
 
@@ -27,5 +28,5 @@ export default async function Habit({ params }: IHabitProps) {
     include: { habitDays: true },
   });
 
-  return <HabitRoot habit={habit!} />;
+  return <Habit habit={habit!} />;
 }

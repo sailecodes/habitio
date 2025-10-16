@@ -4,7 +4,7 @@ import { useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { createNewHabit } from "@/actions/habits";
+import { createNewHabit } from "@/actions/habits.action";
 import {
   Form,
   FormControl,
@@ -16,12 +16,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { IHabitsNewFormProps } from "@/lib/interfaces";
+import { useUserStore } from "@/lib/providers/user-provider";
 import { newHabitSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../../ui/button";
 import { DrawerClose } from "../../ui/drawer";
 
 export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
+  const { user } = useUserStore((state) => state);
+
   const form = useForm<z.infer<typeof newHabitSchema>>({
     resolver: zodResolver(newHabitSchema),
     defaultValues: {
@@ -37,7 +40,7 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
       id: optimisticId,
       name: values.name,
       streak: 0,
-      userId: "", // TODO: Replace with current user's ID
+      userId: user ? user.id : optimisticId,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -47,16 +50,22 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
     drawerCloseRef.current?.click();
 
     startTransition(async () => {
-      const res = await createNewHabit(values);
+      const res = await createNewHabit(values, user!.id);
 
       if (!res.success) {
         console.error(res.error);
-        toast.error("Error creating habit. Please try again.");
+        toast.error("Whoops, error creating habit.", {
+          description: "Please try adding a new habit again.",
+          icon: <span>😯</span>,
+        });
 
         // Rollback optimistic update
         setHabits((prev) => prev.filter((habit) => habit.id !== optimisticId));
       } else {
-        toast.success("Habit created successfully!");
+        toast.success("Habit created successfully!", {
+          description: "Click the habit to view all kinds of statistics.",
+          icon: <span>😀</span>,
+        });
 
         // Replace optimistic habit with real data
         setHabits((prev) => prev.map((habit) => (habit.id === optimisticId ? res.data : habit)));
@@ -91,7 +100,7 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
             className="flex-1/2"
             asChild>
             <Button
-              className="w-full hover-translate"
+              className="w-full hover-translate hover-pointer"
               variant="outline"
               ref={drawerCloseRef}
               disabled={isPending}>
@@ -100,7 +109,7 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
           </DrawerClose>
           <Button
             type="submit"
-            className="flex-1/2 hover-translate"
+            className="flex-1/2 hover-translate hover-pointer"
             disabled={isPending}>
             Submit
           </Button>

@@ -13,12 +13,6 @@ export type TServerActionError = {
   error: string;
 };
 
-export type TServerActionResult = {
-  success: boolean;
-  error?: string;
-  data?: any;
-};
-
 // ============================================================================
 // PRISMA SCHEMA
 
@@ -37,7 +31,7 @@ export type THabit = {
   streak: number;
   userId: string;
   user?: TUser | undefined;
-  habitDays?: THabitDay;
+  habitDays?: THabitDay[];
   createdAt: Date;
   updatedAt: Date;
 };

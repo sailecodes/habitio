@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { register } from "@/actions/auth";
+import { register } from "@/actions/auth.action";
 import { FieldControllerInput } from "@/components/auth/field-controller-input";
 import EmailVerificationAlert from "@/components/auth/register/email-verification-alert";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,7 @@ export default function Register() {
       if (res.error.includes("taken")) {
         toast.error("One step too slow!", {
           description: "Seems like your email or username are already taken.",
-          icon: <span>☹</span>,
+          icon: <span>😥</span>,
         });
       } else {
         toast.error("Uh oh. Something went wrong!", {

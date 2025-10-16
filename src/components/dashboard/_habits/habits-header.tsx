@@ -1,37 +1,12 @@
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { IHabitsHeaderProps } from "@/lib/interfaces";
-import HabitsNewForm from "./habits-new-form";
+import HabitsDrawer from "./habits-drawer";
 
 export default function HabitsHeader({ setHabits }: IHabitsHeaderProps) {
   return (
     <header className="flex justify-between items-center gap-10">
       <div className="flex items-center gap-5">
         <span className="text-header">Projects</span>
-        <Drawer>
-          <DrawerTrigger asChild>
-            <Button className="hover-translate hover-pointer">
-              <Plus />
-              <span>Add new habit</span>
-            </Button>
-          </DrawerTrigger>
-          <DrawerContent className="pt-5">
-            <DrawerHeader className="p-0">
-              <DrawerTitle className="pt-5 pb-0 text-subheader">Start a new habit</DrawerTitle>
-            </DrawerHeader>
-            <DrawerFooter className="px-0 pt-5 pb-10">
-              <HabitsNewForm setHabits={setHabits} />
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
+        <HabitsDrawer setHabits={setHabits} />
       </div>
     </header>
   );
