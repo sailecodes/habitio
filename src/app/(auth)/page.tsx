@@ -46,7 +46,7 @@ export default function SignIn() {
           icon: <span>💀</span>,
         });
       } else {
-        toast.error("Uh oh. Something went wrong!", {
+        toast.error("Uh oh. Something went wrong.", {
           description: "Please try again or refresh the page.",
           icon: <span>😯</span>,
         });

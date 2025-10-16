@@ -1,5 +1,8 @@
 import { HabitProgress } from "@/app/generated/prisma";
 
+// ============================================================================
+// SERVER ACTIONS
+
 export type TServerActionSuccess = {
   success: true;
   data: any | null;
@@ -16,12 +19,13 @@ export type TServerActionResult = {
   data?: any;
 };
 
+// ============================================================================
+// PRISMA SCHEMA
+
 export type TUser = {
   id: string;
   email: string;
   username: string;
-  firstName: string;
-  lastName: string;
   habits?: THabit[];
   createdAt: Date;
   updatedAt: Date;
@@ -32,7 +36,8 @@ export type THabit = {
   name: string;
   streak: number;
   userId: string;
-  habitDays?: THabitDay[];
+  user?: TUser | undefined;
+  habitDays?: THabitDay;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -42,6 +47,7 @@ export type THabitDay = {
   date: Date;
   progress: HabitProgress;
   habitId: string;
+  habit?: THabit | undefined;
   createdAt: Date;
   updatedAt: Date;
 };

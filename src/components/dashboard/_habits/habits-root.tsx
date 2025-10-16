@@ -1,5 +1,5 @@
-import prisma from '@/lib/prisma';
-import Habits from './habits';
+import prisma from "@/lib/prisma";
+import Habits from "./habits";
 
 export default async function HabitsRoot() {
   const habitsData = await prisma.habit.findMany({

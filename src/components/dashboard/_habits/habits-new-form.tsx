@@ -37,7 +37,7 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
       id: optimisticId,
       name: values.name,
       streak: 0,
-      userId: "temp", // TODO: Replace with current user's ID
+      userId: "", // TODO: Replace with current user's ID
       createdAt: new Date(),
       updatedAt: new Date(),
     };

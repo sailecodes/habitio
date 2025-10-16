@@ -8,14 +8,14 @@ export async function updateSession(request: NextRequest) {
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {
       cookies: {
         getAll() {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value));
           supabaseResponse = NextResponse.next({
             request,
           });
@@ -37,19 +37,13 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
+  const path = request.nextUrl.pathname;
 
-  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (!user && path.startsWith("/dashboard")) {
     const url = request.nextUrl.clone();
-    // Redirect to the login page if the user is not authenticated
-    url.pathname = "/sign-in";
+    url.pathname = "/";
     return NextResponse.redirect(url);
-  } else if (
-    user &&
-    (request.nextUrl.pathname.startsWith("/sign-in") ||
-      request.nextUrl.pathname.startsWith("/register"))
-  ) {
-    // Redirect to the dashboard if the user is authenticated and tries to access the login or sign-up page
+  } else if (user && (path === "/" || path === "/register")) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);
