@@ -21,18 +21,3 @@ export const createUserStore = (initState: TUserState = defaultUserInitState) =>
     signOut: () => set({ user: null }),
   }));
 };
-
-// interface UserStore {
-//   user: TUser | null;
-//   initUser: (user: TUser | null) => void;
-// }
-
-// export const useUserStore = create<UserStore>()(
-//   persist(
-//     (set) => ({
-//       user: null,
-//       initUser: (user) => set(() => ({ user })),
-//     }),
-//     { name: "user-storage" }
-//   )
-// );

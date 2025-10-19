@@ -52,7 +52,15 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
     startTransition(async () => {
       const res = await createNewHabit(values, user!.id);
 
-      if (!res.success) {
+      if (res.success) {
+        toast.success("Habit created successfully!", {
+          description: "Click the habit to view all kinds of statistics.",
+          icon: <span>😀</span>,
+        });
+
+        // Replace optimistic habit with real data
+        setHabits((prev) => prev.map((habit) => (habit.id === optimisticId ? res.data : habit)));
+      } else {
         console.error(res.error);
         toast.error("Whoops, error creating habit.", {
           description: "Please try adding a new habit again.",
@@ -61,14 +69,6 @@ export default function HabitsNewForm({ setHabits }: IHabitsNewFormProps) {
 
         // Rollback optimistic update
         setHabits((prev) => prev.filter((habit) => habit.id !== optimisticId));
-      } else {
-        toast.success("Habit created successfully!", {
-          description: "Click the habit to view all kinds of statistics.",
-          icon: <span>😀</span>,
-        });
-
-        // Replace optimistic habit with real data
-        setHabits((prev) => prev.map((habit) => (habit.id === optimisticId ? res.data : habit)));
       }
     });
   }

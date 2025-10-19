@@ -66,11 +66,11 @@ export async function register(
 
     return { success: true, data: null };
   } catch (err) {
-    // TODO: Rollback
+    // TODO: ROLLBACK
 
     return {
       success: false,
-      error: `[REGISTER ERROR] Something went wrong. ${err}`,
+      error: `[REGISTER ERROR] Something went wrong.\n${err}`,
     };
   }
 }
@@ -101,7 +101,7 @@ export async function signIn(
 
     return { success: true, data: null };
   } catch (err) {
-    return { success: false, error: `[SIGN IN ERROR] Something went wrong. ${err}` };
+    return { success: false, error: `[SIGN IN ERROR] Something went wrong.\n${err}` };
   }
 }
 
@@ -114,6 +114,6 @@ export async function signOut(): Promise<TServerActionSuccess | TServerActionErr
 
     return { success: true, data: null };
   } catch (err) {
-    return { success: false, error: `[SIGN OUT ERROR] Something went wrong ${err}` };
+    return { success: false, error: `[SIGN OUT ERROR] Something went wrong.\n${err}` };
   }
 }

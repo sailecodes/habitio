@@ -89,7 +89,7 @@ export default function SignIn() {
             type="submit"
             variant="outline"
             disabled={isSigningIn}
-            className="bg-indigo-400 hover:bg-indigo-400/80 w-full text-white hover:text-white hover-translate">
+            className="bg-indigo-400 hover:bg-indigo-400/80 w-full text-white hover:text-white hover:cursor-pointer hover-translate">
             {isSigningIn ? <Spinner /> : "Start your habits"}
           </Button>
         </form>

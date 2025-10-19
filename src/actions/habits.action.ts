@@ -27,7 +27,7 @@ export async function createNewHabit(
 
     return { success: true, data: newHabit };
   } catch (err) {
-    return { success: false, error: `[CREATE NEW HABIT ERROR] ${err}` };
+    return { success: false, error: `[CREATE NEW HABIT ERROR] Something went wrong.\n${err}` };
   }
 }
 
@@ -96,6 +96,6 @@ export async function updateDailyProgress(
 
     return { success: true, data: updatedHabitDay };
   } catch (err) {
-    return { success: false, error: `[UPDATE DAILY PROGRESS ERROR] Something went wrong. ${err}` };
+    return { success: false, error: `[UPDATE DAILY PROGRESS ERROR] Something went wrong.\n${err}` };
   }
 }
