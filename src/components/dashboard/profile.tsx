@@ -1,10 +1,10 @@
 "use client";
 
+import { User2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { signOut } from "@/actions/auth.action";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,7 +24,7 @@ export default function Profile() {
       router.push("/");
     } else {
       console.error(res.error);
-      toast.error("Uh oh. Something went wrong.", {
+      toast.error("Uh oh, something went wrong.", {
         description: "Please try again or refresh the page.",
         icon: <span>😯</span>,
       });
@@ -34,10 +34,7 @@ export default function Profile() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="hover:cursor-pointer">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <User2 />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My account</DropdownMenuLabel>

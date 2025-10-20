@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUserStore } from "@/lib/providers/user-provider";
 
-export default function SettingsPassword() {
+export default function SettingsUserInformationPassword() {
   const { user } = useUserStore((state) => state);
   const [password, setPassword] = useState<string>("");
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
@@ -24,7 +24,7 @@ export default function SettingsPassword() {
       });
     } else {
       console.error(res.error);
-      toast.error("Uh oh. Something went wrong.", {
+      toast.error("Uh oh, something went wrong.", {
         description: "Please try again or refresh the page.",
         icon: <span>😯</span>,
       });

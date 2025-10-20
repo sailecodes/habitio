@@ -13,19 +13,19 @@ body {
 
 @layer components {
   .text-title {
-    @apply text-5xl font-medium -tracking-[3px];
+    @apply font-medium text-5xl -tracking-[3px];
   }
 
   .text-header {
-    @apply text-3xl font-medium -tracking-[2px];
+    @apply font-medium text-3xl -tracking-[2px];
   }
 
   .text-subheader {
-    @apply text-2xl font-normal -tracking-[2px];
+    @apply font-normal text-2xl -tracking-[2px];
   }
 
   .card {
-    @apply rounded-md border-1 p-5 shadow-md;
+    @apply shadow-md p-5 border rounded-md;
   }
 
   .hover-pointer {

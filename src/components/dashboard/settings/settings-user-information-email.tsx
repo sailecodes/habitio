@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { changeEmail } from "@/actions/user.action";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUserStore } from "@/lib/providers/user-provider";
 
-export default function SettingsEmail() {
+export default function SettingsUserInformationEmail() {
   const { user } = useUserStore((state) => state);
   const [email, setEmail] = useState<string>(user!.email);
 
@@ -26,7 +26,7 @@ export default function SettingsEmail() {
       });
     } else {
       console.error(res.error);
-      toast.error("Uh oh. Something went wrong.", {
+      toast.error("Uh oh, something went wrong.", {
         description: "Please try again or refresh the page.",
         icon: <span>😯</span>,
       });
@@ -36,19 +36,18 @@ export default function SettingsEmail() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="flex-1 space-y-3">
       <div className="space-y-2">
         <Label
           htmlFor="email"
           className="text-base">
-          Email Address
+          Email address
         </Label>
         <Input
           id="email"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="max-w-[600px]"
         />
       </div>
       <div className="space-x-3">
