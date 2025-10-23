@@ -4,11 +4,11 @@ import z from "zod";
 import prisma from "@/lib/prisma";
 import { registerSchema, signInSchema } from "@/lib/schemas";
 import { createClient } from "@/lib/supabase/server";
-import { CUSTOM_ERROR_TYPE, TServerActionError2, TServerActionSuccess } from "@/lib/types";
+import { CUSTOM_ERROR_TYPE, TServerActionError, TServerActionSuccess } from "@/lib/types";
 
 export async function register(
   data: z.infer<typeof registerSchema>
-): Promise<TServerActionSuccess | TServerActionError2> {
+): Promise<TServerActionSuccess | TServerActionError> {
   let supabase = null;
   let rbSbUser = null;
   let rbPUser = null;
@@ -19,10 +19,7 @@ export async function register(
     if (parseError) {
       return {
         success: false,
-        error: {
-          type: CUSTOM_ERROR_TYPE.NON_UI,
-          message: `[REGISTER ERROR] ${parseError.message}`,
-        },
+        error: `[REGISTER ERROR] ${parseError.message}`,
       };
     }
 
@@ -33,11 +30,7 @@ export async function register(
     if (isUserUnique) {
       return {
         success: false,
-        error: {
-          type: CUSTOM_ERROR_TYPE.UI,
-          message: "[REGISTER ERROR] Email or username is already taken.",
-          uiKeyword: "taken",
-        },
+        error: "Email or username is already taken.",
       };
     }
 
@@ -54,18 +47,12 @@ export async function register(
     if (!sbUser) {
       return {
         success: false,
-        error: {
-          type: CUSTOM_ERROR_TYPE.NON_UI,
-          message: "[REGISTER ERROR] Supabase user does not exist",
-        },
+        error: "[REGISTER ERROR] Supabase user does not exist",
       };
     } else if (registerError) {
       return {
         success: false,
-        error: {
-          type: CUSTOM_ERROR_TYPE.NON_UI,
-          message: `[REGISTER ERROR] ${registerError.message}`,
-        },
+        error: `[REGISTER ERROR] ${registerError.message}`,
       };
     }
 
@@ -83,17 +70,14 @@ export async function register(
 
     return {
       success: false,
-      error: {
-        type: CUSTOM_ERROR_TYPE.NON_UI,
-        message: `[REGISTER ERROR] Something went wrong.\n${err}`,
-      },
+      error: `[REGISTER ERROR] Something went wrong.\n${err}`,
     };
   }
 }
 
 export async function signIn(
   data: z.infer<typeof signInSchema>
-): Promise<TServerActionSuccess | TServerActionError2> {
+): Promise<TServerActionSuccess | TServerActionError> {
   let supabase = null;
 
   try {
@@ -102,7 +86,7 @@ export async function signIn(
     if (parseError) {
       return {
         success: false,
-        error: { type: CUSTOM_ERROR_TYPE.NON_UI, message: `[SIGN IN ERROR] ${parseError.message}` },
+        error: `[SIGN IN ERROR] ${parseError.message}`,
       };
     }
 
@@ -115,18 +99,12 @@ export async function signIn(
     if (!sbUser) {
       return {
         success: false,
-        error: {
-          type: CUSTOM_ERROR_TYPE.NON_UI,
-          message: "[SIGN IN ERROR] Supabase user does not exist",
-        },
+        error: "[SIGN IN ERROR] Supabase user does not exist",
       };
     } else if (signInError) {
       return {
         success: false,
-        error: {
-          type: CUSTOM_ERROR_TYPE.NON_UI,
-          message: `[SIGN IN ERROR] ${signInError.message}`,
-        },
+        error: `[SIGN IN ERROR] ${signInError.message}`,
       };
     }
 
@@ -134,15 +112,12 @@ export async function signIn(
   } catch (err) {
     return {
       success: false,
-      error: {
-        type: CUSTOM_ERROR_TYPE.NON_UI,
-        message: `[SIGN IN ERROR] Something went wrong.\n${err}`,
-      },
+      error: `[SIGN IN ERROR] Something went wrong.\n${err}`,
     };
   }
 }
 
-export async function signOut(): Promise<TServerActionSuccess | TServerActionError2> {
+export async function signOut(): Promise<TServerActionSuccess | TServerActionError> {
   let supabase = null;
 
   try {
@@ -153,10 +128,7 @@ export async function signOut(): Promise<TServerActionSuccess | TServerActionErr
   } catch (err) {
     return {
       success: false,
-      error: {
-        type: CUSTOM_ERROR_TYPE.NON_UI,
-        message: `[SIGN OUT ERROR] Something went wrong.\n${err}`,
-      },
+      error: `[SIGN OUT ERROR] Something went wrong.\n${err}`,
     };
   }
 }
