@@ -1,5 +1,10 @@
 import { HabitProgress } from "@/app/generated/prisma";
 
+export enum CUSTOM_ERROR_TYPE {
+  "UI",
+  "NON_UI",
+}
+
 // ============================================================================
 // SERVER ACTIONS
 
@@ -11,6 +16,15 @@ export type TServerActionSuccess = {
 export type TServerActionError = {
   success: false;
   error: string;
+};
+
+export type TServerActionError2 = {
+  success: false;
+  error: {
+    type: CUSTOM_ERROR_TYPE;
+    message: string;
+    uiKeyword?: string;
+  };
 };
 
 // ============================================================================

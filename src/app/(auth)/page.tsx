@@ -13,6 +13,7 @@ import { FieldGroup } from "@/components/ui/field";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { signInSchema } from "@/lib/schemas";
+import { CUSTOM_ERROR_TYPE } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function SignIn() {
@@ -34,14 +35,15 @@ export default function SignIn() {
     if (res.success) {
       router.push("/dashboard");
     } else if (!res.success) {
-      console.error(res.error);
+      console.error(res.error.message);
 
-      if (res.error.includes("confirmed")) {
+      // TODO: Update with new returned error
+      if (res.error.message.includes("confirmed")) {
         toast.error("Email isn't verified.", {
           description: "Please check your email for the verification link.",
           icon: <span>🤔</span>,
         });
-      } else if (res.error.includes("credentials")) {
+      } else if (res.error.message.includes("credentials")) {
         toast.error("Well, something isn't right.", {
           description: "Please double-check your email and password.",
           icon: <span>💀</span>,

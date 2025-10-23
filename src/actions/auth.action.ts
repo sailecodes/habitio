@@ -4,11 +4,11 @@ import z from "zod";
 import prisma from "@/lib/prisma";
 import { registerSchema, signInSchema } from "@/lib/schemas";
 import { createClient } from "@/lib/supabase/server";
-import { TServerActionError, TServerActionSuccess } from "@/lib/types";
+import { CUSTOM_ERROR_TYPE, TServerActionError2, TServerActionSuccess } from "@/lib/types";
 
 export async function register(
   data: z.infer<typeof registerSchema>
-): Promise<TServerActionSuccess | TServerActionError> {
+): Promise<TServerActionSuccess | TServerActionError2> {
   let supabase = null;
   let rbSbUser = null;
   let rbPUser = null;
@@ -19,7 +19,10 @@ export async function register(
     if (parseError) {
       return {
         success: false,
-        error: `[REGISTER ERROR] ${parseError.message}`,
+        error: {
+          type: CUSTOM_ERROR_TYPE.NON_UI,
+          message: `[REGISTER ERROR] ${parseError.message}`,
+        },
       };
     }
 
@@ -30,7 +33,11 @@ export async function register(
     if (isUserUnique) {
       return {
         success: false,
-        error: "Email or username is already taken.",
+        error: {
+          type: CUSTOM_ERROR_TYPE.UI,
+          message: "[REGISTER ERROR] Email or username is already taken.",
+          uiKeyword: "taken",
+        },
       };
     }
 
@@ -47,12 +54,18 @@ export async function register(
     if (!sbUser) {
       return {
         success: false,
-        error: "[REGISTER ERROR] Supabase user does not exist",
+        error: {
+          type: CUSTOM_ERROR_TYPE.NON_UI,
+          message: "[REGISTER ERROR] Supabase user does not exist",
+        },
       };
     } else if (registerError) {
       return {
         success: false,
-        error: `[REGISTER ERROR] ${registerError.message}`,
+        error: {
+          type: CUSTOM_ERROR_TYPE.NON_UI,
+          message: `[REGISTER ERROR] ${registerError.message}`,
+        },
       };
     }
 
@@ -70,21 +83,27 @@ export async function register(
 
     return {
       success: false,
-      error: `[REGISTER ERROR] Something went wrong.\n${err}`,
+      error: {
+        type: CUSTOM_ERROR_TYPE.NON_UI,
+        message: `[REGISTER ERROR] Something went wrong.\n${err}`,
+      },
     };
   }
 }
 
 export async function signIn(
   data: z.infer<typeof signInSchema>
-): Promise<TServerActionSuccess | TServerActionError> {
+): Promise<TServerActionSuccess | TServerActionError2> {
   let supabase = null;
 
   try {
     const { data: parsedData, error: parseError } = signInSchema.safeParse(data);
 
     if (parseError) {
-      return { success: false, error: `[SIGN IN ERROR] ${parseError.message}` };
+      return {
+        success: false,
+        error: { type: CUSTOM_ERROR_TYPE.NON_UI, message: `[SIGN IN ERROR] ${parseError.message}` },
+      };
     }
 
     supabase = await createClient();
@@ -94,18 +113,36 @@ export async function signIn(
     });
 
     if (!sbUser) {
-      return { success: false, error: "[SIGN IN ERROR] Supabase user does not exist" };
+      return {
+        success: false,
+        error: {
+          type: CUSTOM_ERROR_TYPE.NON_UI,
+          message: "[SIGN IN ERROR] Supabase user does not exist",
+        },
+      };
     } else if (signInError) {
-      return { success: false, error: `[SIGN IN ERROR] ${signInError.message}` };
+      return {
+        success: false,
+        error: {
+          type: CUSTOM_ERROR_TYPE.NON_UI,
+          message: `[SIGN IN ERROR] ${signInError.message}`,
+        },
+      };
     }
 
     return { success: true, data: null };
   } catch (err) {
-    return { success: false, error: `[SIGN IN ERROR] Something went wrong.\n${err}` };
+    return {
+      success: false,
+      error: {
+        type: CUSTOM_ERROR_TYPE.NON_UI,
+        message: `[SIGN IN ERROR] Something went wrong.\n${err}`,
+      },
+    };
   }
 }
 
-export async function signOut(): Promise<TServerActionSuccess | TServerActionError> {
+export async function signOut(): Promise<TServerActionSuccess | TServerActionError2> {
   let supabase = null;
 
   try {
@@ -114,6 +151,12 @@ export async function signOut(): Promise<TServerActionSuccess | TServerActionErr
 
     return { success: true, data: null };
   } catch (err) {
-    return { success: false, error: `[SIGN OUT ERROR] Something went wrong.\n${err}` };
+    return {
+      success: false,
+      error: {
+        type: CUSTOM_ERROR_TYPE.NON_UI,
+        message: `[SIGN OUT ERROR] Something went wrong.\n${err}`,
+      },
+    };
   }
 }
