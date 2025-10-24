@@ -35,15 +35,15 @@ export default function SignIn() {
     if (res.success) {
       router.push("/dashboard");
     } else if (!res.success) {
-      console.error(res.error.message);
+      console.error(res.error);
 
       // TODO: Update with new returned error
-      if (res.error.message.includes("confirmed")) {
+      if (res.error.includes("confirmed")) {
         toast.error("Email isn't verified.", {
           description: "Please check your email for the verification link.",
           icon: <span>🤔</span>,
         });
-      } else if (res.error.message.includes("credentials")) {
+      } else if (res.error.includes("credentials")) {
         toast.error("Well, something isn't right.", {
           description: "Please double-check your email and password.",
           icon: <span>💀</span>,
